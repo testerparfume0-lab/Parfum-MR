@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Souvenirs de Paris — Catalogue</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F7F4EE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1B2A45;
+  --navy-deep:#10192C;
+  --navy-soft:#243652;
+  --cream:#F2E9D8;
+  --cream-dim:#E6DAC2;
+  --mustard:#D89A2C;
+  --mustard-deep:#B97D1A;
+  --brick:#B23B2E;
+  --brick-deep:#8C2C22;
+  --ink:#1A1814;
+  --brass:#8C7048;
+  --sage:#5E7A5E;
+  --shadow:0 8px 20px rgba(20,20,30,0.12);
+  --paper:#FFFFFF;
+  --paper-dim:#F7F4EE;
+
+  /* ===== Glass (iOS Control Center style) ===== */
+  --glass-bg:rgba(255,255,255,0.38);
+  --glass-bg-strong:rgba(255,255,255,0.68);
+  --glass-bg-navy:rgba(27,42,69,0.55);
+  --glass-border:rgba(255,255,255,0.55);
+  --glass-border-soft:rgba(255,255,255,0.35);
+  --glass-blur:blur(28px) saturate(180%);
+  --glass-blur-soft:blur(18px) saturate(160%);
+  --glass-shadow:0 8px 32px rgba(20,20,30,0.18);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{margin:0;padding:0;overflow-x:hidden;width:100%;background:#F7F4EE;scroll-behavior:smooth;}
+body{margin:0;padding:0;width:100%;position:relative;-webkit-overflow-scrolling:touch;}
+body{
+  font-family:var(--font-body, 'Jost', sans-serif);
+  background:transparent;
+  color:var(--ink);
+  min-height:100vh;
+}
+
+html{scrollbar-width:thin;scrollbar-color:rgba(140,112,72,0.25) transparent;}
+.display{font-family:'Fraunces',serif;}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--mustard);color:var(--navy-deep);}
+
+.bg-texture{
+  position:fixed;top:-20px;right:-20px;bottom:-20px;left:-20px;z-index:-1;
+}
+.bg-texture::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:var(--bg-image, url('https://images.unsplash.com/photo-1699727813770-2435c9c7c4f5?fm=jpg&q=75&w=1600&auto=format&fit=crop&ixlib=rb-4.1.0'));
+  background-size:cover;
+  background-position:center top;
+  background-repeat:no-repeat;
+  opacity:var(--bg-image-opacity, 1);
+}
+.bg-texture::after{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(216,154,44,0.12), transparent 60%),
+    linear-gradient(180deg, rgba(239,234,226,var(--bg-overlay-opacity, 0.55)) 0%, rgba(247,244,238,var(--bg-overlay-opacity, 0.55)) 40%, rgba(247,244,238,var(--bg-overlay-opacity, 0.55)) 100%);
+}
+
+.sticky-header-wrap{
+  position:sticky;top:0;z-index:40;
+  width:100%;max-width:100%;
+  background:var(--topbar-bg, rgba(247,244,238,0.92));
+  box-shadow:var(--header-shadow, var(--glass-shadow));
+  overflow:hidden;
+}
+.topbar{
+  background:transparent;
+  padding:18px 16px 14px;
+  border-bottom:1px solid var(--glass-border);
+  width:100%;
+  box-sizing:border-box;
+}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand .mark{
+  width:var(--logo-size, 38px);height:calc(var(--logo-size, 38px) * 1.21);
+  color:var(--mustard-deep);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.brand .mark svg{width:100%;height:100%;}
+.brand .mark img{width:100%;height:100%;object-fit:contain;border-radius:8px;}
+.brand h1{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:var(--shop-name-size, 21px);font-weight:600;letter-spacing:0.2px;margin:0;color:var(--ink);
+  line-height:1.15;
+  min-height:24px;
+}
+.brand .sub{
+  font-size:8.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mustard-deep);
+  margin-top:2px;
+  min-height:11px;
+}
+.topbar-actions{display:flex;gap:8px;align-items:center;}
+.icon-btn{
+  position:relative;
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border);
+  color:var(--ink);
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;
+  box-shadow:0 4px 14px rgba(20,20,30,0.1);
+}
+.icon-btn:active{background:var(--glass-bg-strong);}
+.icon-btn.cart-btn{
+  width:var(--cart-icon-size, 48px);height:var(--cart-icon-size, 48px);
+  padding:12px;
+  border:1px solid var(--glass-border);
+}
+.icon-btn.cart-btn svg{width:100%;height:100%;}
+.cart-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--mustard-deep);color:#fff;
+  font-size:10px;font-weight:700;
+  min-width:19px;height:19px;border-radius:10px;
+  padding:0 4px;box-sizing:border-box;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--paper-dim);
+}
+.cart-badge.bump{animation:cartBadgeBump .45s cubic-bezier(.34,1.56,.64,1);}
+@keyframes cartBadgeBump{
+  0%{transform:scale(1);}
+  35%{transform:scale(1.5);}
+  60%{transform:scale(0.92);}
+  100%{transform:scale(1);}
+}
+
+.search-wrap{margin-top:14px;position:relative;}
+.search-wrap input{
+  width:100%;
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  height:var(--search-bar-height, 45px);
+  padding:0 18px 0 40px;
+  font-size:var(--search-font-size, 14.5px);
+  font-family:'Jost';
+  color:var(--ink);
+  outline:none;
+  box-shadow:0 4px 14px rgba(20,20,30,0.08);
+}
+.search-wrap input::placeholder{color:#a39a8a;}
+.search-wrap .s-icon{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  font-size:14px;color:var(--brass);
+}
+.search-clear{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--brass);font-size:16px;padding:4px;
+  display:none;
+}
+
+.cat-strip{
+  display:flex;gap:var(--chip-gap, 9px);overflow-x:auto;padding:var(--catstrip-padding, 14px) 16px var(--catstrip-padding, 14px);
+  scrollbar-width:none;
+  background:transparent;
+  width:100%;
+  box-sizing:border-box;
+}
+.cat-strip::-webkit-scrollbar{display:none;}
+.cat-chip{
+  flex:0 0 auto;
+  background:var(--catstrip-chip-bg, var(--glass-bg));
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border);
+  color:var(--ink);
+  padding:9px 16px;
+  border-radius:var(--chip-radius, 18px);
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:0.1px;
+  white-space:nowrap;
+  animation:chipFadeIn .25s ease-out backwards;
+  box-shadow:0 2px 8px rgba(20,20,30,0.06);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+@keyframes chipFadeIn{
+  0%{opacity:0;transform:translateY(-4px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+.cat-chip:nth-child(1){animation-delay:0s;}
+.cat-chip:nth-child(2){animation-delay:.02s;}
+.cat-chip:nth-child(3){animation-delay:.04s;}
+.cat-chip:nth-child(4){animation-delay:.06s;}
+.cat-chip:nth-child(5){animation-delay:.08s;}
+.cat-chip:nth-child(n+6){animation-delay:.1s;}
+.cat-chip:active{transform:scale(var(--press-scale, 0.95));}
+.cat-chip.active{
+  background:rgba(27,42,69,0.16);
+  color:var(--navy-deep);
+  border-color:rgba(27,42,69,0.35);
+  font-weight:700;
+  box-shadow:0 2px 10px rgba(27,42,69,0.12);
+}
+.cat-chip.catalogue-chip{
+  background:var(--glass-bg);border:1.5px solid var(--mustard);color:var(--mustard-deep);font-weight:700;
+}
+.cat-chip.featured-chip{
+  background:var(--glass-bg);color:var(--mustard-deep);border:1px solid var(--glass-border);font-weight:600;
+}
+.cat-chip.featured-chip.active{background:rgba(27,42,69,0.16);color:var(--navy-deep);border-color:rgba(27,42,69,0.35);}
+.section-title.featured-title{color:var(--mustard-deep);}
+.cat-chip .count{opacity:0.6;font-size:10.5px;margin-left:4px;font-weight:600;}
+
+.loading-state{
+  text-align:center;padding:70px 20px;color:var(--ink);opacity:0.7;
+}
+.spinner{
+  width:30px;height:30px;border-radius:50%;
+  border:3px solid rgba(216,154,44,0.25);
+  border-top-color:var(--mustard);
+  margin:0 auto 14px;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.skeleton-grid{padding:0;text-align:left;opacity:1;}
+
+.loading-progress-wrap{
+  padding:24px 20px 26px;text-align:center;
+  margin:10px 12px 18px;
+  background:rgba(255,255,255,0.85);
+  border-radius:18px;
+  box-shadow:0 8px 28px rgba(20,20,30,0.12);
+  border:1px solid rgba(216,154,44,0.25);
+}
+.loading-progress-track{
+  width:90%;max-width:340px;margin:0 auto 16px;
+  height:16px;border-radius:10px;overflow:hidden;
+  background:rgba(140,112,72,0.18);
+  box-shadow:inset 0 1px 4px rgba(20,20,30,0.1);
+}
+.loading-progress-bar{
+  height:100%;width:0%;border-radius:10px;
+  background:linear-gradient(90deg, var(--mustard-deep), var(--mustard));
+  transition:width .25s ease-out;
+  position:relative;overflow:hidden;
+}
+.loading-progress-bar::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+  background-size:200% 100%;
+  animation:progressShine 1.3s ease-in-out infinite;
+}
+@keyframes progressShine{
+  0%{background-position:200% 0;}
+  100%{background-position:-50% 0;}
+}
+.loading-progress-bar.indeterminate{
+  width:40% !important;
+  animation:progressIndeterminate 1.1s ease-in-out infinite;
+}
+@keyframes progressIndeterminate{
+  0%{transform:translateX(-100%);}
+  100%{transform:translateX(250%);}
+}
+.loading-progress-label{
+  font-family:'Fraunces',serif;font-size:26px;font-weight:800;color:var(--mustard-deep);letter-spacing:0.3px;
+}
+.loading-progress-subtitle{
+  font-size:12.5px;color:var(--brass);margin-top:6px;font-weight:500;letter-spacing:0.2px;
+}
+.skeleton-ticket{
+  background:rgba(255,255,255,0.55);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:var(--glass-shadow);
+  padding-bottom:13px;
+}
+.sk-img{
+  aspect-ratio:1/1;
+  background:linear-gradient(110deg, rgba(20,20,30,0.06) 8%, rgba(20,20,30,0.12) 18%, rgba(20,20,30,0.06) 33%);
+  background-size:200% 100%;
+  animation:skeletonShine 1.4s ease-in-out infinite;
+}
+.sk-line{
+  height:11px;border-radius:6px;margin:12px 13px 0;
+  background:linear-gradient(110deg, rgba(20,20,30,0.06) 8%, rgba(20,20,30,0.12) 18%, rgba(20,20,30,0.06) 33%);
+  background-size:200% 100%;
+  animation:skeletonShine 1.4s ease-in-out infinite;
+}
+.sk-line.w70{width:70%;}
+.sk-line.w40{width:40%;margin-top:8px;height:15px;}
+@keyframes skeletonShine{
+  0%{background-position:200% 0;}
+  100%{background-position:-200% 0;}
+}
+
+.home-tiles{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+}
+.home-tile{
+  position:relative;
+  background:rgba(255,255,255,0.5);
+  border:none;
+  border-radius:12px;overflow:hidden;
+  box-shadow:var(--glass-shadow);aspect-ratio:1/1;
+  display:flex;align-items:flex-end;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .15s ease-out, transform .15s ease-out;
+  content-visibility:auto;
+  contain-intrinsic-size:0 180px;
+}
+.home-tile.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+.home-tile img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14px;
+}
+.home-tile .tile-label{
+  position:relative;width:100%;
+  background:linear-gradient(to top, rgba(16,25,44,0.92), transparent);
+  color:#fff;padding:24px 12px 10px;
+  font-family:'Fraunces',serif;font-weight:700;font-size:13.5px;
+  line-height:1.25;
+}
+.home-tile .tile-count{
+  font-size:10.5px;font-weight:500;color:var(--mustard);display:block;margin-top:2px;
+}
+.home-tile.featured-tile{
+  background:linear-gradient(135deg, var(--mustard), var(--brick));
+}
+
+.catalogue{padding:12px;padding-bottom:110px;max-width:880px;margin:0 auto;}
+.section-title{
+  font-family:'Fraunces',serif;font-weight:700;
+  font-size:15px;color:var(--mustard-deep);margin:20px 4px 12px;
+  display:flex;align-items:center;gap:10px;letter-spacing:0.3px;
+}
+.section-title::after{content:'';flex:1;height:1px;background:rgba(20,20,30,0.1);}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--card-gap, 8px);}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);}}
+
+.ticket{
+  position:relative;
+  background:rgba(255,255,255,0.62);
+  border:none;
+  border-radius:var(--card-radius, 16px);
+  box-shadow:var(--glass-shadow);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  min-width:0;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .15s ease-out, transform .15s ease-out;
+  content-visibility:auto;
+  contain-intrinsic-size:0 280px;
+}
+.ticket.animating{will-change:opacity, transform;}
+.ticket.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+.ticket-main{padding:0;min-width:0;}
+.ticket-img-wrap{
+  position:relative;
+  aspect-ratio:var(--image-aspect, 1) / 1;
+  background:rgba(255,255,255,0.3);
+  border-radius:var(--image-radius, 0px);
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  min-width:0;
+}
+.ticket-img-wrap img{width:100%;height:100%;object-fit:contain;padding:var(--image-padding, 14px);display:block;}
+.stamp{display:none;}
+.image-preview-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(10,14,20,0.92);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  display:flex!important;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .25s ease;
+  pointer-events:none;
+}
+.image-preview-overlay.show{opacity:1;pointer-events:all;}
+.image-preview-img{
+  max-width:90vw;max-height:75vh;border-radius:16px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  transform:scale(0.92);transition:transform .3s cubic-bezier(.22,1.55,.36,1);
+  object-fit:contain;
+}
+.image-preview-overlay.show .image-preview-img{transform:scale(1);}
+.image-preview-caption{
+  margin-top:16px;color:rgba(255,255,255,0.8);font-family:'Fraunces',serif;
+  font-size:15px;font-weight:600;text-align:center;
+}
+.image-preview-close{
+  position:absolute;top:16px;right:16px;
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  border-radius:50%;width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+}
+.ticket-img-wrap{cursor:zoom-in;}
+.size-corner-badge{
+  position:absolute;top:8px;right:8px;z-index:5;
+  width:var(--size-badge-diameter, 30px);height:var(--size-badge-diameter, 30px);
+  border-radius:50%;
+  background:var(--size-badge-bg, #1B2A45);
+  color:var(--size-badge-text, #D89A2C);
+  border:2px solid var(--size-badge-border, #D89A2C);
+  display:flex;align-items:center;justify-content:center;
+  font-size:var(--size-badge-font-size, 13px);font-weight:800;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25);
+}
+.ticket-body{padding:12px 13px 10px;min-width:0;overflow:hidden;}
+.t-name{
+  font-family:'Fraunces',serif;font-weight:700;font-size:var(--name-size, 13.5px);
+  color:var(--ink);line-height:var(--name-line-height, 1.32);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:3px;min-height:35px;
+  word-break:break-word;overflow-wrap:break-word;
+}
+.t-ref{font-size:var(--ref-size, 10px);color:var(--brass);letter-spacing:0.6px;text-transform:none;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.t-unit{
+  display:inline-flex;align-items:center;gap:4px;
+  max-width:100%;
+  box-sizing:border-box;
+  font-size:var(--lot-label-size, 11.5px);color:var(--brass);font-weight:600;
+  background:var(--paper-dim);
+  padding:4px 10px;border-radius:20px;
+  margin-top:6px;letter-spacing:0.1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+
+.perf-seam{display:none;}
+
+.ticket-stub{
+  background:transparent;
+  border-radius:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:2px 13px 13px;
+}
+.ticket-stub .price{
+  font-family:'Fraunces',serif;font-weight:700;font-size:var(--price-size, 21px);color:var(--ink);line-height:1;
+}
+.ticket-stub .price .cents{font-size:13.5px;font-weight:600;opacity:0.75;}
+.qty-control{
+  display:flex;align-items:center;gap:0;
+  background:rgba(255,255,255,0.55);
+  border:1px solid var(--glass-border-soft);
+  border-radius:14px;overflow:hidden;
+}
+.qty-control button{
+  background:none;border:none;width:26px;height:26px;font-size:14px;font-weight:700;
+  color:var(--ink);display:flex;align-items:center;justify-content:center;
+}
+.qty-control span{width:26px;text-align:center;font-size:12.5px;font-weight:700;color:var(--ink);}
+.qty-control input.qty-input{
+  width:auto;min-width:24px;max-width:54px;text-align:center;font-size:12.5px;font-weight:700;color:var(--ink);
+  border:none;background:transparent;font-family:inherit;padding:0 2px;
+}
+.qty-control input.qty-input::-webkit-outer-spin-button,
+.qty-control input.qty-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.qty-control input.qty-input[type=number]{-moz-appearance:textfield;}
+.add-btn{
+  position:relative;
+  background:var(--mustard-deep);color:#fff;border:none;
+  width:var(--add-btn-size, 34px);height:var(--add-btn-size, 34px);border-radius:50%;font-size:18px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(185,125,26,0.35);
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1), background-color .25s ease, box-shadow .25s ease;
+}
+.add-btn:active{transform:scale(0.85);}
+.add-btn.pop{
+  animation:addBtnPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+.add-btn.added{
+  background:var(--sage);
+  box-shadow:0 3px 14px rgba(94,122,94,0.45);
+}
+@keyframes addBtnPop{
+  0%{transform:scale(1) rotate(0deg);}
+  25%{transform:scale(1.4) rotate(-12deg);background-color:var(--sage);}
+  50%{transform:scale(0.82) rotate(6deg);}
+  72%{transform:scale(1.12) rotate(-2deg);}
+  100%{transform:scale(1) rotate(0deg);}
+}
+.add-btn::after{
+  content:'';
+  position:absolute;inset:-4px;
+  border-radius:50%;
+  border:2px solid var(--sage);
+  opacity:0;
+  pointer-events:none;
+}
+.add-btn.pop::after{
+  animation:addBtnRipple .55s ease-out;
+}
+@keyframes addBtnRipple{
+  0%{opacity:0.7;transform:scale(0.6);border-width:3px;}
+  60%{opacity:0.4;transform:scale(1.3);}
+  100%{opacity:0;transform:scale(1.9);border-width:1px;}
+}
+
+.empty-state{text-align:center;padding:60px 20px;color:var(--ink);opacity:0.75;}
+.empty-state .glyph{font-size:38px;margin-bottom:10px;display:block;}
+.empty-state h3{margin:0 0 6px;font-size:17px;font-family:'Fraunces';}
+.empty-state p{margin:0;font-size:13px;opacity:0.8;}
+
+.success-state{opacity:1;padding:50px 24px;}
+.success-check-wrap{
+  width:84px;height:84px;margin:0 auto 18px;
+}
+.success-check{width:100%;height:100%;}
+.success-check-circle{
+  stroke-dasharray:226;stroke-dashoffset:226;
+  animation:successCircleDraw .5s ease-out forwards;
+  transform-origin:center;
+}
+.success-check-mark{
+  stroke-dasharray:48;stroke-dashoffset:48;
+  animation:successMarkDraw .35s ease-out .45s forwards;
+}
+@keyframes successCircleDraw{
+  0%{stroke-dashoffset:226;}
+  100%{stroke-dashoffset:0;}
+}
+@keyframes successMarkDraw{
+  0%{stroke-dashoffset:48;}
+  100%{stroke-dashoffset:0;}
+}
+.success-check-wrap{
+  animation:successPop .5s cubic-bezier(.34,1.56,.64,1) .55s both;
+}
+@keyframes successPop{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.12);}
+  100%{transform:scale(1);}
+}
+.success-order-num{
+  font-family:'Fraunces',serif;font-weight:800;font-size:30px !important;
+  color:var(--ink);margin:4px 0 10px !important;
+  opacity:0;animation:successFadeUp .4s ease-out .75s forwards;
+}
+@keyframes successFadeUp{
+  0%{opacity:0;transform:translateY(8px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+.success-state p{
+  opacity:0;animation:successFadeUp .4s ease-out .9s forwards;
+}
+
+.ticket.out-of-stock{opacity:0.72;}
+.ticket.out-of-stock .ticket-img-wrap img{filter:grayscale(0.4);}
+.stock-banner{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(178,59,46,0.92);color:#fff;
+  font-size:11px;font-weight:700;text-align:center;
+  padding:5px 0;letter-spacing:0.3px;
+}
+.stock-label{
+  font-size:11.5px;font-weight:700;color:var(--ink);opacity:0.6;
+  font-style:italic;
+}
+
+.cart-fab{
+  position:fixed;bottom:18px;left:16px;right:16px;max-width:848px;margin:0 auto;
+  background:var(--cartfab-bg, var(--glass-bg-navy));
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid rgba(255,255,255,0.18);
+  color:#fff;border-radius:30px;padding:13px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 14px 36px rgba(16,25,44,0.45);z-index:35;
+  transform:translateY(140%) scale(0.92);opacity:0;
+  transition:transform .25s cubic-bezier(.22,1.4,.36,1), opacity .2s ease;
+}
+.cart-fab.show{transform:translateY(0) scale(1);opacity:1;}
+.cart-fab.bump{animation:cartFabBump .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes cartFabBump{
+  0%{transform:translateY(0) scale(1);}
+  35%{transform:translateY(-6px) scale(1.04);}
+  100%{transform:translateY(0) scale(1);}
+}
+.cart-fab-info{display:flex;flex-direction:column;}
+.cart-fab-info .n{font-size:11px;color:var(--brass);letter-spacing:0.5px;}
+.cart-fab-info .t{font-family:'Fraunces';font-size:17px;font-weight:700;}
+.cart-fab-btn{
+  background:var(--mustard);color:var(--navy-deep);border:none;
+  padding:10px 20px;border-radius:20px;font-weight:700;font-size:13.5px;letter-spacing:0.3px;
+  transition:transform .15s ease;
+}
+.cart-fab-btn:active{transform:scale(0.95);}
+
+.fab-admin{
+  position:fixed;bottom:18px;left:16px;width:46px;height:46px;border-radius:50%;
+  background:var(--glass-bg-strong);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);display:flex;align-items:center;justify-content:center;
+  font-size:18px;z-index:34;color:var(--mustard-deep);
+}
+.cart-fab.show ~ .fab-admin{display:none;}
+
+.overlay{
+  position:fixed;inset:0;background:var(--overlay-bg, rgba(8,12,22,0.55));z-index:60;
+  -webkit-backdrop-filter:blur(14px) saturate(120%);
+  backdrop-filter:blur(14px) saturate(120%);
+  opacity:0;visibility:hidden;transition:opacity .3s;
+}
+#clientPromptOverlay{z-index:90;}
+#clientPromptOverlay.show{opacity:1;visibility:visible;}
+.client-prompt-modal{
+  position:fixed;top:8vh;left:50%;
+  transform:translate(-50%,-12px) scale(0.9);
+  width:min(360px,88vw);
+  max-height:80vh;
+  overflow-y:auto;
+  background:var(--glass-bg-strong);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border-soft);
+  border-radius:24px;
+  padding:28px 22px 24px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.4);
+  z-index:91;
+  opacity:0;visibility:hidden;
+  transition:opacity .3s ease, transform .4s cubic-bezier(.22,1.55,.36,1);
+  text-align:center;
+}
+.client-prompt-modal.show{
+  opacity:1;visibility:visible;
+  transform:translate(-50%,0) scale(1);
+}
+.client-prompt-emoji{
+  font-size:40px;margin-bottom:8px;
+  animation:promptWave .6s ease-in-out .15s;
+}
+@keyframes promptWave{
+  0%,100%{transform:rotate(0deg);}
+  25%{transform:rotate(-15deg);}
+  50%{transform:rotate(12deg);}
+  75%{transform:rotate(-8deg);}
+}
+.client-prompt-modal h2{
+  font-family:'Fraunces',serif;font-size:22px;margin:0 0 6px;color:var(--ink);
+}
+.client-prompt-modal p{font-size:14px;color:var(--ink);opacity:0.75;margin:0 0 18px;}
+.client-prompt-modal .form-group{text-align:left;margin-bottom:12px;}
+.client-prompt-modal .form-group label{color:var(--mustard-deep) !important;}
+.client-prompt-modal input{
+  background:rgba(255,255,255,0.7) !important;
+}
+.overlay.show{opacity:1;visibility:visible;}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);
+  background:var(--drawer-bg, var(--glass-bg-strong));
+  -webkit-backdrop-filter:var(--drawer-blur, var(--glass-blur));
+  backdrop-filter:var(--drawer-blur, var(--glass-blur));
+  z-index:61;
+  transform:translateX(100%);
+  will-change:transform;
+  transition:transform var(--anim-speed-normal, .24s) cubic-bezier(.16,1.32,.38,1), box-shadow var(--anim-speed-normal, .22s);
+  display:flex;flex-direction:column;
+  box-shadow:none;
+  border-left:1px solid var(--glass-border-soft);
+}
+.drawer.show{
+  box-shadow:-10px 0 40px rgba(20,20,30,0.25);
+}
+.drawer.show{transform:translateX(0);}
+.drawer-header{
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  color:var(--ink);padding:18px 18px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--glass-border-soft);
+}
+.drawer-header h2{margin:0;font-size:18px;font-weight:700;font-family:'Fraunces';font-style:italic;}
+.admin-signature-banner{
+  background:rgba(27,42,69,0.32);
+  -webkit-backdrop-filter:blur(20px) saturate(1.6);
+  backdrop-filter:blur(20px) saturate(1.6);
+  padding:14px 20px 16px;
+  display:flex;align-items:baseline;justify-content:space-between;
+  border-bottom:2px solid var(--mustard);
+  border-top:1px solid rgba(255,255,255,0.18);
+  position:relative;
+}
+.admin-signature-name{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:17px;
+  color:var(--mustard);letter-spacing:0.3px;
+}
+.admin-signature-date{
+  font-size:11px;color:rgba(255,255,255,0.65);text-transform:capitalize;
+}
+.drawer-close{
+  background:var(--glass-bg);border:1px solid var(--glass-border-soft);color:var(--ink);
+  width:var(--drawer-close-size, 32px);height:var(--drawer-close-size, 32px);border-radius:50%;font-size:16px;
+}
+.drawer-body{flex:1;overflow-y:auto;padding:16px;}
+.drawer-footer{
+  padding:16px;border-top:1px solid var(--glass-border-soft);
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+}
+
+.cart-line{
+  display:flex;gap:10px;
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:10px;margin-bottom:10px;
+  animation:cartLineIn .22s ease-out;
+  box-shadow:0 2px 10px rgba(20,20,30,0.06);
+}
+@keyframes cartLineIn{
+  0%{opacity:0;transform:translateX(10px);}
+  100%{opacity:1;transform:translateX(0);}
+}
+.cart-line img{width:58px;height:58px;object-fit:contain;background:#fff;border-radius:5px;flex-shrink:0;}
+.cart-line-info{flex:1;min-width:0;}
+.cart-line-info .nm{font-size:13px;font-weight:600;line-height:1.25;margin-bottom:2px;color:var(--ink);font-family:'Fraunces';}
+.cart-line-info .rf{font-size:10px;color:var(--brass);}
+.cart-line-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+.cart-line-price{font-family:'Fraunces';font-weight:700;font-size:13.5px;color:var(--brick);}
+
+.summary-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;color:var(--brass);}
+.summary-row.total{
+  font-size:19px;font-weight:700;color:var(--ink);font-family:'Fraunces';
+  margin-top:8px;padding-top:10px;border-top:1px dashed rgba(216,154,44,0.3);
+}
+
+.btn-primary{
+  width:100%;background:var(--mustard);color:var(--navy-deep);border:none;
+  padding:14px;border-radius:var(--button-radius, 24px);font-size:15px;font-weight:700;letter-spacing:0.3px;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-primary:active{background:var(--mustard-deep);}
+.confirm-order-btn{
+  font-size:16.5px;padding:17px;border-radius:26px;
+  box-shadow:0 8px 22px rgba(216,154,44,0.4);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.confirm-order-btn:active{transform:scale(0.97);box-shadow:0 4px 12px rgba(216,154,44,0.35);}
+.confirm-order-icon{
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(16,25,44,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.confirm-order-text{font-family:'Fraunces',serif;font-weight:700;}
+.confirm-order-hint{
+  text-align:center;font-size:11.5px;color:var(--brass);
+  margin:-4px 0 10px;opacity:0.85;
+}
+.signature-pad-label{
+  text-align:center;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;
+}
+.signature-pad-box{
+  position:relative;
+  background:rgba(255,255,255,0.7);
+  border:1.5px dashed rgba(140,112,72,0.35);
+  border-radius:16px;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+#signatureCanvas{
+  width:100%;height:160px;display:block;touch-action:none;
+}
+.signature-pad-line{
+  position:absolute;left:24px;right:24px;bottom:36px;
+  border-top:1.5px dotted rgba(140,112,72,0.4);
+  pointer-events:none;
+}
+.signature-clear-btn{
+  position:absolute;top:8px;right:8px;
+  background:rgba(255,255,255,0.85);border:1px solid rgba(140,112,72,0.25);
+  border-radius:14px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--brass);
+}
+.confirm-order-btn:disabled{opacity:0.45;}
+.btn-secondary{
+  width:100%;
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  color:var(--ink);border:1.5px solid var(--glass-border);
+  padding:13px;border-radius:24px;font-size:14.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-danger-outline{
+  width:100%;
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur-soft);
+  backdrop-filter:var(--glass-blur-soft);
+  color:var(--brick);border:1.5px solid var(--brick);
+  padding:13px;border-radius:24px;font-size:14.5px;font-weight:600;
+}
+
+.choice-modal-body p{font-size:13.5px;color:var(--brass);margin:0 0 16px;line-height:1.5;}
+.choice-btn{
+  width:100%;display:flex;align-items:center;gap:14px;background:var(--cream);border:none;
+  border-radius:10px;padding:14px;margin-bottom:12px;text-align:left;
+}
+.choice-btn .ic{
+  width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.choice-btn.local .ic{background:#e7f0e7;color:var(--sage);}
+.choice-btn .tx strong{display:block;font-size:14.5px;color:var(--ink);margin-bottom:1px;font-family:'Fraunces';}
+.choice-btn .tx span{font-size:12px;color:var(--brass);}
+
+.form-group{margin-bottom:14px;}
+.form-group label{
+  display:block;font-size:12px;font-weight:600;color:#fff;margin-bottom:6px;letter-spacing:0.3px;
+}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:11px 13px;border:1.5px solid var(--glass-border);
+  border-radius:6px;font-size:14px;font-family:'Jost';
+  background:rgba(255,255,255,0.55);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  outline:none;color:var(--ink);
+}
+.form-group input:focus,.form-group select:focus{border-color:var(--mustard);}
+.form-group input.input-error{
+  border-color:var(--brick);
+  background:rgba(178,59,46,0.06);
+  animation:fieldShake .35s ease;
+}
+@keyframes fieldShake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  75%{transform:translateX(5px);}
+}
+.field-error{
+  color:var(--brick);font-size:12px;font-weight:600;margin:6px 2px 14px;
+  display:flex;align-items:flex-start;gap:5px;line-height:1.4;
+}
+.form-hint{font-size:11px;color:var(--brass);margin-top:5px;opacity:0.8;}
+
+.unit-toggle{display:flex;gap:8px;margin-bottom:10px;}
+.unit-toggle button{
+  flex:1;padding:10px;border-radius:6px;border:1.5px solid rgba(216,154,44,0.3);
+  background:var(--paper);color:var(--ink);font-size:13px;font-weight:600;
+}
+.unit-toggle button.active{background:var(--mustard);color:var(--navy-deep);border-color:var(--mustard);}
+
+.image-drop{
+  border:1.5px dashed rgba(216,154,44,0.4);border-radius:8px;padding:16px;text-align:center;
+  background:var(--cream);cursor:pointer;position:relative;overflow:hidden;color:var(--ink);
+}
+.image-drop img{max-width:100%;max-height:140px;object-fit:contain;margin-bottom:8px;}
+.image-drop .ph{font-size:24px;color:#bbb;margin-bottom:6px;}
+.image-drop .lb{font-size:12.5px;color:var(--brass);}
+.image-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+
+.bg-remove-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--paper);border-radius:8px;padding:11px 13px;margin-top:10px;margin-bottom:4px;
+}
+.bg-remove-toggle .lb{font-size:12.5px;color:var(--ink);}
+.bg-remove-toggle .lb small{display:block;color:var(--brass);font-size:10.5px;margin-top:1px;}
+.switch{position:relative;width:42px;height:24px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.switch .track{
+  position:absolute;inset:0;background:rgba(216,154,44,0.25);border-radius:14px;transition:.2s;
+}
+.switch .track::before{
+  content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:var(--cream);
+  border-radius:50%;transition:.2s;
+}
+.switch input:checked + .track{background:var(--mustard);}
+.switch input:checked + .track::before{transform:translateX(18px);}
+.bg-status{font-size:11px;margin-top:6px;color:var(--mustard);min-height:14px;}
+
+.crop-stage{
+  display:flex;align-items:center;justify-content:center;
+  background:#000;border-radius:10px;overflow:hidden;
+  touch-action:none;
+}
+.crop-stage canvas{display:block;max-width:100%;cursor:grab;}
+.crop-stage canvas:active{cursor:grabbing;}
+
+.admin-section-label{
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mustard);
+  margin:18px 4px 10px;font-weight:600;
+}
+.admin-product-row-wrap{margin-bottom:8px;}
+.admin-product-row-wrap,.order-card,.cat-manage-card{
+  opacity:0;
+  transform:translateY(5px);
+  transition:opacity .15s ease-out, transform .15s ease-out;
+  content-visibility:auto;
+  contain-intrinsic-size:0 120px;
+}
+.admin-product-row-wrap.in-view,.order-card.in-view,.cat-manage-card.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+.admin-product-row{
+  display:flex;gap:10px;align-items:center;
+  background:rgba(255,255,255,0.6);
+  border:none;
+  border-radius:8px;padding:9px;
+}
+.admin-product-row img{width:44px;height:44px;object-fit:contain;background:#fff;border-radius:5px;flex-shrink:0;}
+.admin-product-row .info{flex:1;min-width:0;}
+.admin-product-row .info .nm{font-size:12.5px;font-weight:600;line-height:1.2;color:var(--ink);font-family:'Fraunces';}
+.admin-product-row .info .meta{font-size:10.5px;color:var(--brass);}
+.admin-row-actions{display:flex;gap:6px;}
+.admin-icon-btn{
+  background:var(--cream-dim);border:none;width:29px;height:29px;border-radius:7px;
+  font-size:12.5px;display:flex;align-items:center;justify-content:center;color:var(--ink);
+}
+.admin-icon-btn.danger{color:var(--brick);}
+
+.lot-quickpicker{
+  display:flex;gap:6px;align-items:center;flex-wrap:wrap;
+  background:var(--cream-dim);border-radius:0 0 8px 8px;
+  padding:9px 10px;margin-top:-4px;
+}
+.lqp-label{font-size:11px;color:var(--brass);font-weight:600;flex-basis:100%;margin-bottom:2px;}
+.lqp-btn{
+  background:#fff;border:1.5px solid rgba(140,112,72,0.3);color:var(--ink);
+  padding:6px 12px;border-radius:14px;font-size:12.5px;font-weight:700;
+}
+.lqp-btn.active{background:var(--sage);color:#fff;border-color:var(--sage);}
+.lqp-btn.unit{font-size:11px;font-weight:600;}
+.lqp-btn.unit.active{background:var(--navy);border-color:var(--navy);}
+
+.lot-bulk-box{
+  background:var(--paper);border-radius:10px;padding:12px;margin-top:8px;margin-bottom:14px;
+}
+.cat-cover-box{
+  background:var(--paper);border-radius:10px;padding:12px;margin:0 12px 12px;
+}
+.cat-cover-row{display:flex;gap:12px;align-items:center;}
+.cat-cover-preview{
+  width:64px;height:64px;border-radius:10px;overflow:hidden;background:var(--paper-dim);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+}
+.cat-cover-preview img{width:100%;height:100%;object-fit:cover;}
+.cat-cover-actions{flex:1;display:flex;flex-direction:column;}
+.lot-bulk-box .lqp-label{
+  font-size:12px;color:var(--ink);font-weight:600;flex-basis:auto;margin-bottom:8px;
+}
+.lot-bulk-buttons{display:flex;gap:8px;flex-wrap:wrap;}
+.lot-bulk-buttons .lqp-btn{
+  background:var(--cream);color:var(--ink);border:1.5px solid rgba(216,154,44,0.3);
+}
+.lot-bulk-buttons .lqp-btn:active{background:var(--sage);color:#fff;}
+
+.cat-manage-card{
+  background:rgba(255,255,255,0.6);
+  border:1px solid var(--glass-border-soft);
+  border-radius:10px;margin-bottom:8px;overflow:hidden;
+}
+.cat-manage-row{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+}
+.cat-manage-row input{flex:1;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--ink);outline:none;}
+.cat-reorder-buttons{display:flex;gap:3px;flex-shrink:0;}
+.cat-reorder-buttons .admin-icon-btn{width:24px;height:24px;font-size:11px;}
+.cat-reorder-buttons .admin-icon-btn:disabled{opacity:0.3;}
+.cat-advanced{border-top:1px solid rgba(140,112,72,0.15);}
+.cat-advanced summary{
+  list-style:none;cursor:pointer;padding:9px 12px;font-size:12px;font-weight:600;color:var(--brass);
+  display:flex;align-items:center;gap:6px;
+}
+.cat-advanced summary::-webkit-details-marker{display:none;}
+.cat-advanced[open] summary{color:var(--ink);}
+.cat-advanced .bulk-pricing-box,.cat-advanced .lot-bulk-box{margin:0 12px 12px;}
+.add-cat-row{display:flex;gap:8px;margin-top:10px;}
+.add-cat-row input{flex:1;}
+.add-cat-row button{background:var(--mustard);color:var(--navy-deep);border:none;border-radius:6px;padding:0 16px;font-size:13px;font-weight:700;}
+
+.tab-row{
+  display:flex;gap:5px;margin-bottom:16px;background:var(--paper);border-radius:10px;
+  padding:4px;overflow-x:auto;box-shadow:0 1px 6px rgba(20,20,30,0.06);
+  border:1px solid rgba(20,20,30,0.06);
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x proximity;
+  position:relative;
+}
+.tab-row-wrap{position:relative;}
+.tab-row-wrap::after{
+  content:'';position:absolute;top:4px;right:0;bottom:4px;width:28px;
+  background:linear-gradient(to right, transparent, var(--paper) 75%);
+  border-radius:0 10px 10px 0;pointer-events:none;
+}
+.tab-badge{
+  display:inline-block;background:var(--brick);color:#fff;font-size:10.5px;font-weight:700;
+  min-width:17px;height:17px;border-radius:9px;padding:0 4px;line-height:17px;
+  vertical-align:top;margin-left:1px;
+}
+.notifications-intro{font-size:12.5px;color:var(--brass);line-height:1.5;margin:0 2px 14px;}
+.stock-alert-card{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:10px;margin-bottom:8px;
+}
+.stock-alert-card.zero{background:rgba(178,59,46,0.07);border-color:rgba(178,59,46,0.25);}
+.stock-alert-card img{width:46px;height:46px;object-fit:contain;background:#fff;border-radius:8px;flex-shrink:0;}
+.stock-alert-info{flex:1;min-width:0;}
+.stock-alert-name{font-size:13px;font-weight:700;color:var(--ink);}
+.stock-alert-ref{font-size:11px;color:var(--brass);}
+.stock-alert-qty{font-size:12px;font-weight:600;margin-top:2px;color:var(--mustard-deep);}
+.stock-alert-card.zero .stock-alert-qty{color:var(--brick);}
+.stock-alert-dismiss{
+  background:rgba(140,112,72,0.1);border:none;color:var(--brass);
+  width:26px;height:26px;border-radius:50%;font-size:13px;flex-shrink:0;
+}
+.order-notif-card{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:10px 12px;margin-bottom:8px;
+}
+.order-notif-icon{font-size:22px;flex-shrink:0;}
+.order-notif-info{flex:1;min-width:0;}
+.order-notif-title{font-size:13px;font-weight:700;color:var(--ink);}
+.order-notif-sub{font-size:11.5px;color:var(--brass);margin-top:1px;}
+
+.month-nav{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin-bottom:16px;
+}
+.month-nav-btn{
+  background:var(--paper);border:1px solid rgba(140,112,72,0.2);color:var(--ink);
+  width:34px;height:34px;border-radius:50%;font-size:18px;font-weight:700;
+}
+.month-nav-label{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--ink);min-width:140px;text-align:center;}
+
+.period-switch{
+  display:flex;background:var(--paper);border-radius:10px;padding:4px;margin-bottom:14px;
+  border:1px solid rgba(20,20,30,0.06);
+}
+.period-switch-btn{
+  flex:1;background:none;border:none;padding:9px 6px;border-radius:8px;
+  font-size:12.5px;font-weight:700;color:var(--brass);
+}
+.period-switch-btn.active{background:var(--mustard);color:var(--navy-deep);}
+
+.commission-summary-box{
+  background:linear-gradient(135deg, var(--mustard-deep), var(--mustard));
+  border-radius:18px;padding:22px 18px;text-align:center;color:#fff;margin-bottom:18px;
+  box-shadow:0 10px 28px rgba(216,154,44,0.3);
+}
+.commission-summary-total{font-family:'Fraunces',serif;font-size:32px;font-weight:800;}
+.commission-summary-sub{font-size:12.5px;opacity:0.9;margin-top:2px;}
+
+.commission-order-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:10px 12px;margin-bottom:8px;
+}
+.commission-order-name{font-size:13px;font-weight:700;color:var(--ink);}
+.commission-order-sub{font-size:11px;color:var(--brass);margin-top:1px;}
+.commission-order-amount{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage);flex-shrink:0;}
+
+.reduced-shop-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.6);border:1px solid var(--glass-border-soft);
+  border-radius:10px;padding:8px 12px;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--ink);
+}
+
+.ventes-product-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:10px 14px;margin-bottom:8px;
+}
+.ventes-product-name{font-size:13px;font-weight:700;color:var(--ink);display:flex;flex-direction:column;}
+.ventes-product-ref{font-size:11px;color:var(--brass);font-weight:500;margin-top:1px;}
+.ventes-product-qty{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--mustard-deep);flex-shrink:0;}
+
+.vip-shop-row{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:10px 14px;margin-bottom:8px;
+}
+.vip-shop-row.top3{background:rgba(216,154,44,0.1);border-color:rgba(216,154,44,0.3);}
+.vip-shop-medal{font-size:22px;width:30px;text-align:center;flex-shrink:0;}
+.vip-shop-info{flex:1;min-width:0;}
+.vip-shop-name{font-size:13.5px;font-weight:700;color:var(--ink);}
+.vip-shop-sub{font-size:11px;color:var(--brass);}
+.vip-shop-total{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--sage);flex-shrink:0;}
+
+.inactive-shop-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(178,59,46,0.06);border:1px solid rgba(178,59,46,0.2);
+  border-radius:10px;padding:9px 14px;margin-bottom:6px;
+}
+.inactive-shop-name{font-size:13px;font-weight:700;color:var(--ink);}
+.inactive-shop-days{font-size:12px;font-weight:700;color:var(--brick);}
+
+.commission-comparison{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(255,255,255,0.6);border-radius:12px;padding:10px;margin-bottom:14px;
+  font-size:14px;font-weight:700;color:var(--ink);
+}
+.commission-comparison.up{color:var(--sage);}
+.commission-comparison.down{color:var(--brick);}
+.commission-comparison-sub{font-size:11px;font-weight:500;color:var(--brass);}
+
+.shop-map-container{
+  width:100%;height:320px;border-radius:14px;overflow:hidden;
+  border:1px solid var(--glass-border-soft);background:var(--paper);
+}
+.address-suggestions-box{
+  position:absolute;top:100%;left:0;right:0;z-index:40;
+  background:#fff;border:1px solid var(--glass-border-soft);border-radius:10px;
+  box-shadow:0 8px 24px rgba(20,20,30,0.15);margin-top:4px;overflow:hidden;
+  display:none;max-height:220px;overflow-y:auto;
+}
+.address-suggestions-box.show{display:block;}
+.address-suggestion-item{
+  padding:10px 14px;font-size:12.5px;color:var(--ink);border-bottom:1px solid rgba(0,0,0,0.05);cursor:pointer;
+}
+.address-suggestion-item:last-child{border-bottom:none;}
+.address-suggestion-item:active{background:rgba(216,154,44,0.12);}
+.map-shop-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:10px;padding:8px 12px;margin-bottom:6px;font-size:13px;
+}
+.map-shop-row-name{font-weight:700;color:var(--ink);}
+.map-shop-row-coords{font-size:11px;color:var(--brass);}
+.client-profile-header{
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(135deg, var(--navy), #2A3D5C);
+  border-radius:14px;padding:16px;margin-bottom:14px;color:#fff;
+}
+.client-profile-name{font-family:'Fraunces',serif;font-size:17px;font-weight:700;}
+.client-profile-sub{font-size:11.5px;opacity:0.7;margin-top:2px;}
+.client-profile-total{font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:var(--mustard);}
+.client-list-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;
+}
+.client-list-row:active{background:rgba(216,154,44,0.08);}
+.client-list-name{font-size:13.5px;font-weight:700;color:var(--ink);}
+.client-list-sub{font-size:11.5px;color:var(--brass);margin-top:2px;}
+.client-list-arrow{color:var(--brass);font-size:16px;}
+.client-order-card{
+  background:rgba(255,255,255,0.7);border:1px solid var(--glass-border-soft);
+  border-radius:12px;padding:12px;margin-bottom:8px;
+}
+.client-order-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+.client-order-num{font-weight:700;font-size:13px;color:var(--ink);}
+.client-order-date{font-size:11px;color:var(--brass);}
+.client-order-items{font-size:12px;color:var(--brass);margin-bottom:6px;}
+.client-order-total{font-weight:700;color:var(--sage);font-size:14px;}
+
+.reorganiser-grid{
+  display:grid;grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));
+  gap:10px;margin-top:14px;
+}
+.reorganiser-grid .ticket{
+  transform:scale(1);font-size:11px;cursor:grab;
+  transition:opacity .15s, box-shadow .15s;
+}
+.reorganiser-grid .ticket .ticket-img-wrap{height:90px;}
+.reorganiser-grid .ticket .t-name{font-size:11px;}
+.reorganiser-grid .ticket .t-ref{font-size:9.5px;}
+.reorganiser-grid .ticket.dragging{opacity:0.4;}
+.reorganiser-grid .ticket.drag-over{box-shadow:0 0 0 3px var(--mustard);}
+.reorganiser-grid .ticket *{pointer-events:none;}
+
+/* Modales de célébration / wosam du mois — réutilisent le même
+   habillage visuel que .client-prompt-modal pour rester cohérent. */
+.celebration-modal{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.85);
+  width:min(320px,84vw);background:var(--glass-bg-strong);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border-soft);border-radius:24px;padding:30px 22px;
+  text-align:center;z-index:121;opacity:0;visibility:hidden;
+  transition:opacity .3s ease, transform .4s cubic-bezier(.22,1.55,.36,1);
+  box-shadow:0 24px 60px rgba(0,0,0,0.4);
+}
+.celebration-modal.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+.celebration-modal .emoji{font-size:46px;margin-bottom:10px;}
+.celebration-modal .title{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.celebration-modal .subtitle{font-size:13px;color:var(--brass);}
+#celebrationOverlay{z-index:120;}
+#celebrationOverlay.show{opacity:1;visibility:visible;}
+
+.award-modal{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.85);
+  width:min(360px,88vw);
+  background:linear-gradient(160deg, var(--navy) 0%, #2A3D5C 100%);
+  border:2px solid var(--mustard);border-radius:26px;padding:32px 24px;
+  text-align:center;z-index:131;opacity:0;visibility:hidden;color:#fff;
+  transition:opacity .35s ease, transform .45s cubic-bezier(.22,1.55,.36,1);
+  box-shadow:0 30px 70px rgba(0,0,0,0.5);
+}
+.award-modal.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+.award-modal .award-trophy{font-size:50px;margin-bottom:8px;}
+.award-modal .award-title{font-family:'Fraunces',serif;font-style:italic;font-size:21px;font-weight:700;color:var(--mustard);margin-bottom:18px;}
+.award-stat{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.12);font-size:13px;}
+.award-stat:last-child{border-bottom:none;}
+.award-stat-label{opacity:0.75;}
+.award-stat-value{font-weight:700;}
+.award-modal button{
+  margin-top:18px;background:var(--mustard);color:var(--navy-deep);border:none;
+  padding:11px 24px;border-radius:20px;font-weight:700;font-size:13px;
+}
+#awardOverlay{z-index:130;}
+#awardOverlay.show{opacity:1;visibility:visible;}
+@keyframes tabFadeIn{
+  0%{opacity:0;transform:translateY(8px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+.tab-fade-in{animation:tabFadeIn var(--anim-speed-normal, .3s) ease-out;}
+.tab-btn{flex:0 0 auto;min-width:64px;background:none;border:none;padding:9px 10px;border-radius:8px;font-size:12px;font-weight:600;color:var(--brass);white-space:nowrap;scroll-snap-align:start;}
+.tab-btn.active{background:var(--mustard);color:var(--navy-deep);}
+
+.order-card{
+  background:rgba(255,255,255,0.6);
+  border:1px solid var(--glass-border-soft);
+  border-radius:8px;padding:13px;margin-bottom:10px;color:var(--ink);
+}
+.order-card .oc-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+.order-card .oc-num{font-family:'Fraunces';font-weight:700;font-size:14.5px;color:var(--brick);}
+.order-card .oc-date{font-size:10.5px;color:var(--brass);}
+.order-card .oc-client{font-size:13px;font-weight:600;margin-bottom:6px;}
+.order-card .oc-items{font-size:12px;color:#3a3530;line-height:1.5;margin-bottom:6px;}
+.delete-order-btn{
+  width:100%;background:none;border:none;color:var(--brick);
+  font-size:11.5px;font-weight:600;text-decoration:underline;
+  padding:8px 0 0;margin-top:6px;
+}
+.copy-order-btn{
+  width:100%;background:var(--sage);border:none;color:#fff;
+  font-size:13.5px;font-weight:700;
+  padding:12px 0;margin-top:12px;border-radius:12px;
+  box-shadow:0 4px 14px rgba(94,122,94,0.3);
+  transition:transform .12s ease;
+}
+.copy-order-btn:active{transform:scale(0.97);}
+
+.assign-client-wrap{position:relative;margin-bottom:8px;}
+.assign-client-btn{
+  width:100%;background:rgba(27,42,69,0.08);border:1.5px solid rgba(27,42,69,0.2);
+  color:var(--navy);padding:10px;border-radius:12px;font-size:13px;font-weight:700;
+}
+.assign-client-wrap .assign-client-results{
+  position:absolute;left:0;right:0;top:100%;z-index:200;margin-top:4px;
+  display:none;max-height:220px;overflow-y:auto;
+  background:#fff;border:1px solid var(--glass-border-soft);
+  border-radius:12px;box-shadow:0 8px 24px rgba(20,20,30,0.18);
+}
+.assign-client-wrap .assign-client-results.show{display:block;}
+.oc-commission-row{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:8px;padding-top:8px;border-top:1px dashed rgba(140,112,72,0.2);
+}
+.oc-commission-label{font-size:11.5px;color:var(--brass);font-weight:600;}
+.oc-commission-toggle{
+  background:rgba(216,154,44,0.12);border:1px solid rgba(216,154,44,0.3);
+  color:var(--mustard-deep);font-size:11.5px;font-weight:700;
+  padding:6px 10px;border-radius:10px;
+}
+.oc-action-row{display:flex;gap:8px;margin-top:8px;}
+.oc-archive-btn,.oc-delete-btn{
+  flex:1;border:none;font-size:12.5px;font-weight:700;
+  padding:11px 0;border-radius:12px;
+  transition:transform .12s ease;
+}
+.oc-archive-btn{
+  background:rgba(255,255,255,0.7);
+  color:var(--mustard-deep);
+  border:1.5px solid var(--mustard);
+}
+.oc-delete-btn{
+  background:rgba(178,59,46,0.08);
+  color:var(--brick);
+  border:1.5px solid var(--brick);
+}
+.oc-archive-btn:active,.oc-delete-btn:active{transform:scale(0.96);}
+
+.oc-notes-wrap{margin-top:10px;}
+.oc-notes-label{
+  display:block;font-size:11px;font-weight:700;color:var(--brass);
+  margin-bottom:5px;letter-spacing:0.2px;
+}
+.oc-notes-input{
+  width:100%;min-height:52px;resize:vertical;
+  border:1.5px solid rgba(140,112,72,0.25);border-radius:10px;
+  padding:9px 11px;font-size:12.5px;font-family:'Jost';
+  background:rgba(255,255,255,0.7);color:var(--ink);outline:none;
+}
+.oc-notes-input:focus{border-color:var(--mustard);}
+.oc-notes-display{
+  font-size:12px;color:var(--ink);background:rgba(216,154,44,0.1);
+  border-radius:8px;padding:7px 10px;margin-top:6px;line-height:1.4;
+}
+
+.status-just-changed .status-select{
+  animation:statusPulse .5s ease;
+}
+@keyframes statusPulse{
+  0%{box-shadow:0 0 0 0 rgba(94,122,94,0.5);}
+  100%{box-shadow:0 0 0 8px rgba(94,122,94,0);}
+}
+
+.new-order-banner{
+  position:fixed;top:16px;left:16px;right:16px;max-width:480px;margin:0 auto;
+  background:var(--sage);color:#fff;border-radius:14px;
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.35);
+  z-index:200;
+  transform:translateY(-120%);transition:transform .35s cubic-bezier(.34,1.4,.64,1);
+}
+.new-order-banner.show{transform:translateY(0);}
+.new-order-banner .nob-icon{font-size:24px;flex-shrink:0;}
+.new-order-banner .nob-text{flex:1;display:flex;flex-direction:column;}
+.new-order-banner .nob-text strong{font-size:14px;font-family:'Fraunces';}
+.new-order-banner .nob-text span{font-size:12px;opacity:0.9;}
+.new-order-banner .nob-close{background:rgba(255,255,255,0.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:13px;flex-shrink:0;}
+.order-card .oc-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed rgba(140,112,72,0.3);padding-top:8px;}
+.order-card .oc-total{font-family:'Fraunces';font-weight:700;font-size:15px;}
+.status-pill{
+  font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:0.3px;
+}
+.status-pill.nouvelle{background:#fde8c8;color:var(--mustard-deep);}
+.status-pill.en_cours{background:#dce8f5;color:#2b5f8f;}
+.status-pill.terminee{background:#dcebd9;color:var(--sage);}
+.status-select{
+  font-size:13px;font-weight:700;border:1.5px solid rgba(140,112,72,0.35);
+  border-radius:10px;padding:8px 10px;background:#fff;color:var(--ink);
+  box-shadow:0 2px 8px rgba(20,20,30,0.06);
+}
+
+.admin-lock{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:30px;text-align:center;}
+.admin-lock .glyph{font-size:40px;margin-bottom:14px;}
+.admin-lock h3{margin:0 0 6px;font-size:18px;font-family:'Fraunces';}
+.admin-lock p{font-size:13px;color:var(--brass);margin:0 0 20px;}
+.pin-input{display:flex;gap:10px;margin-bottom:18px;}
+.pin-input input{
+  width:46px;height:56px;text-align:center;font-size:22px;
+  border:1.5px solid rgba(216,154,44,0.4);border-radius:8px;
+  font-family:'Fraunces';font-weight:700;color:var(--ink);outline:none;background:var(--cream);
+}
+.pin-input input:focus{border-color:var(--mustard);}
+.pin-error{color:var(--brick);font-size:12.5px;margin-top:-8px;margin-bottom:14px;min-height:16px;}
+
+.logout-link{text-align:center;font-size:12px;color:var(--brass);text-decoration:underline;padding:14px 0 4px;background:none;border:none;width:100%;}
+
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--cream);color:var(--ink);padding:11px 22px;border-radius:20px;
+  font-size:13.5px;z-index:100;opacity:0;transition:all var(--toast-speed, .3s);pointer-events:none;
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);white-space:nowrap;font-weight:600;
+}
+.toast.show{opacity:var(--toast-opacity, 1);transform:translateX(-50%) translateY(0);}
+
+.sync-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sage);margin-right:5px;
+}
+.sync-dot.off{background:var(--brick);}
+.sync-row{font-size:10.5px;color:var(--brass);display:flex;align-items:center;margin-top:6px;}
+
+.bulk-notice{
+  background:var(--paper);border:1px dashed rgba(216,154,44,0.4);
+  border-radius:8px;padding:9px 12px;margin-bottom:10px;
+  font-size:11.5px;color:var(--brass);line-height:1.4;
+}
+.bulk-notice.active{
+  background:rgba(124,143,110,0.18);border:1px solid var(--sage);color:var(--ink);font-weight:600;
+}
+.old-price{
+  text-decoration:line-through;opacity:0.55;font-size:11px;font-weight:500;margin-right:3px;
+}
+.price.bulk{color:var(--sage) !important;}
+.ticket-stub .price.bulk{color:#2F4A2F;}
+
+.bulk-pricing-box{
+  background:var(--paper);border-radius:10px;padding:12px;margin-top:10px;
+}
+.bulk-pricing-box .row{display:flex;gap:10px;margin-top:8px;}
+.bulk-pricing-box .row .form-group{flex:1;margin-bottom:0;}
+
+.theme-settings-box{
+  background:var(--paper);border-radius:12px;padding:14px;margin-top:8px;
+}
+.theme-intro-hint{
+  font-size:12px;color:var(--brass);line-height:1.5;margin:0 4px 10px;opacity:0.9;
+}
+.theme-group-title{
+  font-size:12.5px;font-weight:700;color:var(--mustard-deep);
+  margin:18px 0 10px;padding-top:14px;border-top:1px solid rgba(140,112,72,0.15);
+  animation:settingsRowIn .25s ease-out backwards;
+}
+.theme-group-title:first-child{margin-top:0;padding-top:0;border-top:none;}
+@keyframes settingsRowIn{
+  0%{opacity:0;transform:translateY(6px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+.theme-row{display:flex;gap:12px;margin-bottom:12px;}
+.theme-field{flex:1;}
+.theme-field label{
+  display:block;font-size:11.5px;font-weight:600;color:var(--brass);margin-bottom:6px;
+}
+.theme-field input[type=color]{
+  width:100%;height:40px;border:1.5px solid rgba(216,154,44,0.3);border-radius:8px;
+  padding:2px;background:var(--cream);cursor:pointer;
+}
+.theme-slider-row{margin-bottom:14px;animation:settingsRowIn .25s ease-out backwards;}
+.theme-slider-row label{
+  display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px;
+}
+.theme-slider-val{color:var(--mustard-deep);font-weight:700;}
+.theme-slider-row input[type=range]{
+  width:100%;accent-color:var(--mustard);
+}
+
+.invoice-summary{
+  background:var(--paper);border-radius:10px;padding:14px;margin:14px 0;
+}
+.invoice-summary .ln{display:flex;justify-content:space-between;font-size:13.5px;color:var(--brass);margin-bottom:6px;}
+.invoice-summary .ln.total{
+  font-size:17px;font-weight:700;color:var(--ink);font-family:'Fraunces';
+  margin-top:8px;padding-top:10px;border-top:1px dashed rgba(216,154,44,0.3);
+}
+
+/* ===== Ajout : indicateur visuel produit masque ===== */
+.admin-product-row.hidden-product-row{
+  opacity:0.5;
+  filter:grayscale(0.35);
+}
+.admin-icon-btn.active-hide{
+  background:var(--brick);
+  color:#fff;
+}
+.ic{display:inline-block;width:1em;height:1em;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.ic-lg{width:1.4em;height:1.4em;}
+.ic-xl{width:1.8em;height:1.8em;}
+.tab-btn .ic{width:24px;height:24px;display:block;margin:0 auto 2px;}
+.tab-btn{display:flex;flex-direction:column;align-items:center;font-size:10px;min-width:44px;}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- Commandes / orders -->
+  <symbol id="ic-orders" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="18" height="18" rx="3"/>
+    <line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="14" y2="12"/><line x1="7" y1="16" x2="11" y2="16"/>
+  </symbol>
+  <!-- Produits -->
+  <symbol id="ic-products" viewBox="0 0 24 24">
+    <rect x="2" y="7" width="20" height="15" rx="2"/>
+    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+    <line x1="12" y1="12" x2="12" y2="17"/><line x1="9" y1="14.5" x2="15" y2="14.5"/>
+  </symbol>
+  <!-- Catégories -->
+  <symbol id="ic-categories" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+    <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+  </symbol>
+  <!-- Notifications / cloche -->
+  <symbol id="ic-bell" viewBox="0 0 24 24">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+  </symbol>
+  <!-- Commissions / pièce -->
+  <symbol id="ic-commission" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M14.5 9.5a2.5 2.5 0 0 0-5 0c0 1.5 1 2 2.5 2.5S15 13 15 14.5a2.5 2.5 0 0 1-5 0"/>
+    <line x1="12" y1="7" x2="12" y2="8.5"/><line x1="12" y1="15.5" x2="12" y2="17"/>
+  </symbol>
+  <!-- Ventes / boîte -->
+  <symbol id="ic-ventes" viewBox="0 0 24 24">
+    <polyline points="21 8 21 21 3 21 3 8"/>
+    <rect x="1" y="3" width="22" height="5" rx="1"/>
+    <line x1="10" y1="12" x2="14" y2="12"/>
+  </symbol>
+  <!-- VIP / trophée -->
+  <symbol id="ic-vip" viewBox="0 0 24 24">
+    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 6 9"/>
+    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5A4.8 8 0 0 0 18 9"/>
+    <path d="M4 22h16"/>
+    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+    <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+  </symbol>
+  <!-- Carte / épingle -->
+  <symbol id="ic-map" viewBox="0 0 24 24">
+    <circle cx="12" cy="10" r="3"/>
+    <path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 12.6 7.3 12.9a1 1 0 0 0 1.4 0C13 22.6 20 15.4 20 10a8 8 0 0 0-8-8z"/>
+  </symbol>
+  <!-- Réorganiser / grille glisser -->
+  <symbol id="ic-reorganiser" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+    <rect x="3" y="14" width="7" height="7" rx="1"/>
+    <path d="M17 14v6m-3-3 3 3 3-3"/>
+  </symbol>
+  <!-- Clients / personne -->
+  <symbol id="ic-clients" viewBox="0 0 24 24">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </symbol>
+  <!-- Réglages / engrenage -->
+  <symbol id="ic-settings" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+  </symbol>
+  <!-- Panier -->
+  <symbol id="ic-cart" viewBox="0 0 24 24">
+    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+  </symbol>
+  <!-- Archive -->
+  <symbol id="ic-archive" viewBox="0 0 24 24">
+    <polyline points="21 8 21 21 3 21 3 8"/>
+    <rect x="1" y="3" width="22" height="5" rx="1"/>
+    <line x1="10" y1="12" x2="14" y2="12"/>
+  </symbol>
+  <!-- Supprimer / poubelle -->
+  <symbol id="ic-trash" viewBox="0 0 24 24">
+    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+    <path d="M10 11v6"/><path d="M14 11v6"/>
+    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+  </symbol>
+  <!-- Modifier / crayon -->
+  <symbol id="ic-edit" viewBox="0 0 24 24">
+    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </symbol>
+  <!-- Fusionner / merge -->
+  <symbol id="ic-merge" viewBox="0 0 24 24">
+    <circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+    <path d="M6 9v6"/><path d="M9 6h6a3 3 0 0 1 3 3v6"/>
+  </symbol>
+  <!-- Envoyer -->
+  <symbol id="ic-send" viewBox="0 0 24 24">
+    <line x1="22" y1="2" x2="11" y2="13"/>
+    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+  </symbol>
+  <!-- Recherche -->
+  <symbol id="ic-search" viewBox="0 0 24 24">
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </symbol>
+  <!-- Copier -->
+  <symbol id="ic-copy" viewBox="0 0 24 24">
+    <rect x="9" y="9" width="13" height="13" rx="2"/>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+  </symbol>
+  <!-- Retour / flèche gauche -->
+  <symbol id="ic-back" viewBox="0 0 24 24">
+    <line x1="19" y1="12" x2="5" y2="12"/>
+    <polyline points="12 19 5 12 12 5"/>
+  </symbol>
+  <!-- Ajouter / plus -->
+  <symbol id="ic-plus" viewBox="0 0 24 24">
+    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+  </symbol>
+  <!-- Fermer / X -->
+  <symbol id="ic-x" viewBox="0 0 24 24">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </symbol>
+  <!-- Check / validé -->
+  <symbol id="ic-check" viewBox="0 0 24 24">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+  <!-- Déverrouiller -->
+  <symbol id="ic-lock" viewBox="0 0 24 24">
+    <rect x="3" y="11" width="18" height="11" rx="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </symbol>
+</svg>
+<div class="bg-texture"></div>
+
+<div class="sticky-header-wrap">
+<div class="topbar">
+  <div class="topbar-row">
+    <div class="brand">
+      <span class="mark" id="brandMark">
+        <svg viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="64" r="46" fill="none" stroke="#D89A2C" stroke-width="2" opacity="0.55"/>
+          <g fill="#1B2A45">
+            <rect x="49.3" y="2" width="1.4" height="12"/>
+            <path d="M47.5 14 L52.5 14 L51.3 24 L48.7 24 Z"/>
+            <path d="M48.7 24 L51.3 24 L52.5 34 L47.5 34 Z"/>
+            <path d="M48.2 26.5 L51.8 26.5 L50 30 Z" fill="#D89A2C" opacity="0.5"/>
+            <rect x="46.5" y="34" width="7" height="1.6" fill="#D89A2C"/>
+            <path d="M46.5 35.6 L53.5 35.6 L56.5 54 L43.5 54 Z"/>
+            <path d="M45.5 39 L54.5 39 L48 46 Z" fill="#D89A2C" opacity="0.45"/>
+            <path d="M54.5 39 L45.5 39 L52 46 Z" fill="#D89A2C" opacity="0.45"/>
+            <path d="M44.7 47.5 L55.3 47.5 L50 53 Z" fill="#D89A2C" opacity="0.45"/>
+            <rect x="41" y="54" width="18" height="2.2" fill="#D89A2C"/>
+            <path d="M41.5 56.2 L58.5 56.2 L63 80 L37 80 Z"/>
+            <path d="M40 62 L60 62 L52 70 L48 70 Z" fill="#D89A2C" opacity="0.4"/>
+            <path d="M38.5 70 L61.5 70 L54 78 L46 78 Z" fill="#D89A2C" opacity="0.4"/>
+            <rect x="35" y="80" width="30" height="2.4" fill="#D89A2C"/>
+            <path d="M37 82.4 L43 82.4 L34 122 L25 122 Z"/>
+            <path d="M63 82.4 L57 82.4 L66 122 L75 122 Z"/>
+            <path d="M34 122 L25 122 L25 118 Q25 104 50 104 Q75 104 75 118 L75 122 L66 122 L66 119 Q66 110 50 110 Q34 110 34 119 Z"/>
+            <rect x="20" y="122" width="60" height="2" fill="#D89A2C"/>
+          </g>
+        </svg>
+      </span>
+      <div>
+        <h1 id="shopNameDisplay"></h1>
+        <div class="sub" id="shopSubtitleDisplay"></div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn cart-btn" id="cartIconBtn" aria-label="Panier">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.5 8.5H17.5L17 19.5C16.95 20.6 16.05 21.5 14.95 21.5H9.05C7.95 21.5 7.05 20.6 7 19.5L6.5 8.5Z" stroke="#1B2A45" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M9 8.5V6.5C9 4.84 10.34 3.5 12 3.5C13.66 3.5 15 4.84 15 6.5V8.5" stroke="#B97D1A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge" style="display:none;">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <span class="s-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Rechercher un produit ou une référence…" autocomplete="off">
+    <button class="search-clear" id="searchClear">✕</button>
+  </div>
+</div>
+
+<div class="cat-strip" id="catStrip"></div>
+</div>
+
+<div class="catalogue">
+  <div class="loading-state skeleton-grid" id="loadingState">
+    <div class="loading-progress-wrap">
+      <div class="loading-progress-track">
+        <div class="loading-progress-bar" id="loadingProgressBar"></div>
+      </div>
+      <div class="loading-progress-label" id="loadingProgressLabel">0%</div>
+      <div class="loading-progress-subtitle">Merci de votre patience, nous préparons votre catalogue ✨</div>
+    </div>
+    <div class="grid">
+      <div class="skeleton-ticket"><div class="sk-img"></div><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+      <div class="skeleton-ticket"><div class="sk-img"></div><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+      <div class="skeleton-ticket"><div class="sk-img"></div><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+      <div class="skeleton-ticket"><div class="sk-img"></div><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+      <div class="skeleton-ticket"><div class="sk-img"></div><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+      <div class="skeleton-ticket"><div class="sk-img"></div><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+    </div>
+  </div>
+  <div id="gridContainer"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <span class="glyph">🔎</span>
+    <h3>Aucun produit trouvé</h3>
+    <p>Essayez une autre recherche ou catégorie.</p>
+  </div>
+</div>
+
+<div class="cart-fab" id="cartFab">
+  <div class="cart-fab-info">
+    <span class="n" id="cartFabCount">0 article</span>
+    <span class="t" id="cartFabTotal">0,00 €</span>
+  </div>
+  <button class="cart-fab-btn" id="cartFabBtn">Voir le panier →</button>
+</div>
+
+<button class="fab-admin" id="adminFabBtn" aria-label="Administration"><svg class="ic ic-lg"><use href="#ic-settings"/></svg></button>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-header">
+    <h2>Votre panier</h2>
+    <button class="drawer-close" data-close="cartDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-footer" id="cartFooter" style="display:none;">
+    <div class="summary-row"><span>Articles</span><span id="sumCount">0</span></div>
+    <div class="summary-row total"><span>Total</span><span id="sumTotal">0,00 €</span></div>
+    <div style="height:14px;"></div>
+    <button class="btn-primary" id="checkoutBtn">✓ Confirmer la commande</button>
+    <button class="btn-secondary" id="clearCartBtn">Vider le panier</button>
+  </div>
+</div>
+
+<div class="drawer" id="checkoutDrawer">
+  <div class="drawer-header">
+    <h2>Confirmer la commande</h2>
+    <button class="drawer-close" data-close="checkoutDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <div class="choice-modal-body">
+      <div id="checkoutNameFieldsWrap">
+        <p>Indiquez votre nom pour que la boutique retrouve facilement votre commande.</p>
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" id="clientNameInput" placeholder="Ex. Fuaad Bwadekji">
+          <div class="field-error" id="clientNameError" style="display:none;">⚠️ Merci d'indiquer votre nom pour confirmer la commande</div>
+        </div>
+        <div class="form-group">
+          <label>Nom du magasin</label>
+          <input type="text" id="clientShopInput" placeholder="Ex. Eva Souvenirs">
+          <div class="field-error" id="clientShopError" style="display:none;">⚠️ Merci d'indiquer le nom du magasin pour confirmer la commande</div>
+        </div>
+      </div>
+      <p id="checkoutPrefilledNotice" style="display:none;color:var(--brass);font-size:13px;"></p>
+      <div class="invoice-summary" id="checkoutInvoiceSummary"></div>
+
+      <div id="signaturePadWrap" style="display:none;">
+        <div class="signature-pad-label">Signez ici pour confirmer votre commande</div>
+        <div class="signature-pad-box">
+          <canvas id="signatureCanvas"></canvas>
+          <div class="signature-pad-line"></div>
+          <button class="signature-clear-btn" id="signatureClearBtn">↺ Effacer</button>
+        </div>
+        <button class="btn-primary confirm-order-btn" id="confirmSignatureBtn" disabled>
+          <span class="confirm-order-icon">✓</span>
+          <span class="confirm-order-text">Confirmer avec ma signature</span>
+        </button>
+      </div>
+
+      <button class="btn-primary confirm-order-btn" id="confirmOrderBtn">
+        <span class="confirm-order-icon">✓</span>
+        <span class="confirm-order-text">Envoyer la commande</span>
+      </button>
+      <p class="confirm-order-hint">Elle apparaîtra immédiatement dans l'espace administrateur</p>
+    </div>
+  </div>
+</div>
+
+<div class="drawer" id="orderSuccessDrawer">
+  <div class="drawer-header">
+    <h2>Commande envoyée</h2>
+    <button class="drawer-close" data-close="orderSuccessDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <div class="empty-state success-state">
+      <div class="success-check-wrap">
+        <svg class="success-check" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle class="success-check-circle" cx="40" cy="40" r="36" stroke="var(--sage)" stroke-width="4"/>
+          <path class="success-check-mark" d="M24 41 L35 52 L57 28" stroke="var(--sage)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <h3 id="successOrderNum" class="success-order-num">Commande n°—</h3>
+      <p>Merci ! La boutique a bien reçu votre commande et la prépare.</p>
+    </div>
+  </div>
+</div>
+
+<div class="drawer" id="productDetailDrawer">
+  <div class="drawer-header">
+    <h2>Détail du produit</h2>
+    <button class="drawer-close" data-close="productDetailDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <div id="productDetailBody"></div>
+  </div>
+  <div class="drawer-footer" id="productDetailFooter"></div>
+</div>
+
+<div class="drawer" id="catalogueDrawer">
+  <div class="drawer-header">
+    <h2>Catalogue par catégorie</h2>
+    <button class="drawer-close" data-close="catalogueDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <div id="homeTilesContainer" class="home-tiles" style="padding:0;"></div>
+  </div>
+</div>
+
+<div class="drawer" id="adminDrawer">
+  <div class="drawer-header">
+    <h2>Administration</h2>
+    <button class="drawer-close" data-close="adminDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="admin-signature-banner">
+    <div class="admin-signature-name">Espace Admin</div>
+    <div class="admin-signature-date" id="adminSignatureDate">—</div>
+  </div>
+  <div class="drawer-body">
+    <div id="adminLockScreen" class="admin-lock">
+      <span class="glyph">🔐</span>
+      <h3>Espace administrateur</h3>
+      <p>Entrez votre code à 4 chiffres</p>
+      <div class="pin-input">
+        <input type="tel" maxlength="1" inputmode="numeric">
+        <input type="tel" maxlength="1" inputmode="numeric">
+        <input type="tel" maxlength="1" inputmode="numeric">
+        <input type="tel" maxlength="1" inputmode="numeric">
+      </div>
+      <div class="pin-error" id="pinError"></div>
+      <button class="btn-primary" id="pinSubmit" style="max-width:220px;">Déverrouiller</button>
+    </div>
+
+    <div id="adminPanel" style="display:none;">
+      <div class="tab-row-wrap">
+      <div class="tab-row">
+        <button class="tab-btn active" data-tab="orders"><svg class="ic"><use href="#ic-orders"/></svg>Cmdes</button>
+        <button class="tab-btn" data-tab="products"><svg class="ic"><use href="#ic-products"/></svg>Produits</button>
+        <button class="tab-btn" data-tab="categories"><svg class="ic"><use href="#ic-categories"/></svg>Catég.</button>
+        <button class="tab-btn" data-tab="notifications"><svg class="ic"><use href="#ic-bell"/></svg><span id="notificationsTabBadge" class="tab-badge" style="display:none;">0</span></button>
+        <button class="tab-btn" data-tab="commissions"><svg class="ic"><use href="#ic-commission"/></svg></button>
+        <button class="tab-btn" data-tab="ventes"><svg class="ic"><use href="#ic-ventes"/></svg></button>
+        <button class="tab-btn" data-tab="vip"><svg class="ic"><use href="#ic-vip"/></svg></button>
+        <button class="tab-btn" data-tab="carte"><svg class="ic"><use href="#ic-map"/></svg></button>
+        <button class="tab-btn" data-tab="reorganiser"><svg class="ic"><use href="#ic-reorganiser"/></svg></button>
+        <button class="tab-btn" data-tab="clients"><svg class="ic"><use href="#ic-clients"/></svg></button>
+        <button class="tab-btn" data-tab="settings"><svg class="ic"><use href="#ic-settings"/></svg></button>
+      </div>
+      </div>
+
+      <div id="tabOrders">
+        <div class="admin-section-label">Commandes reçues</div>
+        <div id="adminOrderList"></div>
+        <button class="btn-secondary" id="toggleArchivedBtn" style="margin-top:18px;">🗂 Voir les commandes archivées</button>
+        <div id="archivedOrdersSection" style="display:none;margin-top:10px;">
+          <div class="admin-section-label">Commandes archivées</div>
+          <div id="adminArchivedOrderList"></div>
+        </div>
+      </div>
+
+      <div id="tabProducts" style="display:none;">
+        <button class="btn-primary" id="newProductBtn">+ Ajouter un produit</button>
+        <div class="form-group" style="margin-top:14px;">
+          <label>Rechercher par référence ou nom</label>
+          <input type="text" id="adminProductSearch" placeholder="Ex. MAT221">
+        </div>
+        <div class="admin-section-label">Rechercher pour modifier un produit</div>
+        <div id="adminProductList"></div>
+      </div>
+
+      <div id="tabCategories" style="display:none;">
+        <div class="admin-section-label">Catégories</div>
+        <div id="adminCatList"></div>
+        <div class="add-cat-row">
+          <input type="text" id="newCatInput" placeholder="Nouvelle catégorie…">
+          <button id="addCatBtn">Ajouter</button>
+        </div>
+      </div>
+
+      <div id="tabNotifications" style="display:none;">
+        <div class="admin-section-label">🔔 Nouvelles commandes</div>
+        <p class="notifications-intro">Chaque commande confirmée apparaît ici, même si quelqu'un d'autre l'a passée à votre place. Reste affichée jusqu'à ce que vous la supprimiez vous-même avec le ✕.</p>
+        <div id="adminNotificationsList"></div>
+      </div>
+
+      <div id="tabCommissions" style="display:none;">
+        <div class="admin-section-label">💰 Mes commissions</div>
+        <div class="month-nav">
+          <button id="commissionsPrevMonthBtn" class="month-nav-btn">‹</button>
+          <div class="month-nav-label" id="commissionsMonthLabel">—</div>
+          <button id="commissionsNextMonthBtn" class="month-nav-btn">›</button>
+        </div>
+        <div class="period-switch" id="periodSwitch">
+          <button class="period-switch-btn active" data-period="week">Semaine</button>
+          <button class="period-switch-btn" data-period="month">Mois</button>
+          <button class="period-switch-btn" data-period="total">Total</button>
+        </div>
+        <div class="commission-summary-box">
+          <div class="commission-summary-total" id="commissionTotalAmount">0,00 €</div>
+          <div class="commission-summary-sub" id="commissionTotalSub">0 commande</div>
+        </div>
+        <div class="commission-comparison" id="commissionComparison" style="display:none;"></div>
+        <div id="commissionOrdersList"></div>
+
+        <div class="admin-section-label" style="margin-top:24px;">⚙️ Taux réduit par magasin</div>
+        <p class="notifications-intro">Les magasins listés ici bénéficient d'un taux de commission spécial (<span id="reducedRateLabel">0,5</span>%) au lieu du taux normal (<span id="defaultRateLabel">2</span>%).</p>
+        <div id="reducedShopsList"></div>
+        <div class="add-cat-row">
+          <input type="text" id="newReducedShopInput" placeholder="Nom exact du magasin…">
+          <button id="addReducedShopBtn">Ajouter</button>
+        </div>
+      </div>
+
+      <div id="tabVentes" style="display:none;">
+        <div class="admin-section-label">📦 Ventes par produit</div>
+        <div class="month-nav">
+          <button id="ventesPrevMonthBtn" class="month-nav-btn">‹</button>
+          <div class="month-nav-label" id="ventesMonthLabel">—</div>
+          <button id="ventesNextMonthBtn" class="month-nav-btn">›</button>
+        </div>
+        <div id="ventesProductsList"></div>
+      </div>
+
+      <div id="tabVip" style="display:none;">
+        <div class="admin-section-label">🏆 Classement VIP des magasins</div>
+        <p class="notifications-intro">Classement basé sur le total de toutes les commandes (TTC) de chaque magasin, depuis le début.</p>
+        <div id="vipShopsList"></div>
+
+        <div class="admin-section-label" style="margin-top:24px;">😴 Magasins inactifs</div>
+        <p class="notifications-intro">Magasins n'ayant pas commandé depuis plus de 30 jours.</p>
+        <div id="inactiveShopsList"></div>
+      </div>
+
+      <div id="tabCarte" style="display:none;">
+        <div class="admin-section-label">🗺️ Carte de mes magasins</div>
+        <p class="notifications-intro">Ajoutez l'adresse de chaque magasin pour le voir apparaître sur la carte. La taille du point reflète le total de ses commandes.</p>
+        <div id="shopMapContainer" class="shop-map-container"></div>
+        <div class="admin-section-label" style="margin-top:18px;">Ajouter / modifier un point</div>
+        <div class="form-group">
+          <label>Nom du magasin (exact)</label>
+          <input type="text" id="mapShopNameInput" placeholder="Ex. Eva Souvenirs">
+        </div>
+        <div class="form-group" style="position:relative;">
+          <label>Adresse</label>
+          <input type="text" id="mapShopAddressInput" placeholder="Ex. 15 Rue de la Paix, 75002 Paris" autocomplete="off">
+          <div id="addressSuggestionsBox" class="address-suggestions-box"></div>
+        </div>
+        <button class="btn-primary" id="saveMapShopBtn" style="margin-top:6px;">📍 Localiser et enregistrer</button>
+        <div id="mapShopsList" style="margin-top:16px;"></div>
+      </div>
+
+      <div id="tabReorganiser" style="display:none;">
+        <div class="admin-section-label">🗂 Réorganiser les produits</div>
+        <p class="notifications-intro">Choisissez une catégorie, puis faites glisser une carte pour changer l'ordre d'affichage — exactement comme dans le catalogue, en plus petit.</p>
+        <div class="form-group">
+          <label>Catégorie</label>
+          <select id="reorganiserCategorySelect"></select>
+        </div>
+        <div id="reorganiserGrid" class="reorganiser-grid"></div>
+      </div>
+
+      <div id="tabClients" style="display:none;">
+        <div class="admin-section-label">👤 Clients</div>
+
+        <!-- Barre de recherche + bouton ajouter -->
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <input type="text" id="clientSearchInput" placeholder="Rechercher…" style="flex:1;border-radius:12px;" autocomplete="off">
+          <button class="btn-primary" id="showAddClientBtn" style="padding:10px 14px;width:auto;">+ Nouveau</button>
+        </div>
+        <div id="clientSearchResults" class="address-suggestions-box"></div>
+
+        <!-- Liste de tous les clients -->
+        <div id="clientsList"></div>
+
+        <!-- Formulaire ajout client -->
+        <div id="addClientForm" style="display:none;">
+          <div class="admin-section-label" style="margin-top:16px;">Nouveau client</div>
+          <div class="form-group">
+            <label>Nom du client *</label>
+            <input type="text" id="newClientName" placeholder="Ex. Jean Dupont">
+          </div>
+          <div class="form-group">
+            <label>Nom du magasin</label>
+            <input type="text" id="newClientShop" placeholder="Ex. Eva Souvenirs">
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="text" id="newClientPhone" placeholder="Ex. +33 6 12 34 56 78">
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <input type="text" id="newClientNotes" placeholder="Ex. Préfère les magnets">
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-primary" id="saveNewClientBtn">✓ Enregistrer</button>
+            <button class="btn-secondary" id="cancelAddClientBtn">Annuler</button>
+          </div>
+        </div>
+
+        <!-- Profil client -->
+        <div id="clientProfile" style="display:none;">
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <button class="btn-secondary" id="backToClientsBtn" style="flex:1;"><svg class="ic"><use href="#ic-back"/></svg> Retour</button>
+            <button class="btn-secondary" id="editClientBtn" style="flex:1;"><svg class="ic"><use href="#ic-edit"/></svg> Modifier</button>
+            <button class="btn-secondary" id="mergeClientBtn" style="flex:1;"><svg class="ic"><use href="#ic-merge"/></svg> Fusionner</button>
+          </div>
+          <!-- Zone de fusion -->
+          <div id="mergeZone" style="display:none;background:rgba(216,154,44,0.08);border:1px solid var(--mustard);border-radius:12px;padding:12px;margin-bottom:12px;">
+            <p class="notifications-intro" style="margin:0 0 8px;">Choisissez le doublon à fusionner dans ce profil — toutes ses commandes seront rattachées ici.</p>
+            <input type="text" id="mergeSearchInput" placeholder="Nom du doublon…" autocomplete="off" style="margin-bottom:8px;">
+            <div id="mergeResults" class="address-suggestions-box" style="position:relative;display:block;max-height:160px;"></div>
+          </div>
+          <div class="client-profile-header">
+            <div>
+              <div class="client-profile-name" id="clientProfileName">—</div>
+              <div class="client-profile-sub" id="clientProfileSub">—</div>
+            </div>
+            <div class="client-profile-total" id="clientProfileTotal">—</div>
+          </div>
+          <div id="clientProfileOrders"></div>
+        </div>
+      </div>
+
+      <div id="tabSettings" style="display:none;">
+        <div class="admin-section-label">Apparence</div>
+        <div class="form-group">
+          <label>Logo de la boutique</label>
+          <div class="image-drop" id="logoDropZone">
+            <img id="logoPreview" style="display:none;max-height:70px;">
+            <div id="logoPlaceholder">
+              <div class="ph">🖼️</div>
+              <div class="lb">Touchez pour ajouter un logo</div>
+            </div>
+            <input type="file" accept="image/*" id="logoFileInput">
+          </div>
+          <button class="btn-secondary" id="resetLogoBtn" style="margin-top:8px;padding:9px;font-size:13px;">↺ Revenir au logo par défaut</button>
+        </div>
+        <div class="admin-section-label">Coordonnées</div>
+        <div class="form-group">
+          <label>Nom de la boutique</label>
+          <input type="text" id="settingShopName" placeholder="Souvenirs de Paris">
+        </div>
+        <div class="form-group">
+          <label>Sous-titre (sous le nom)</label>
+          <input type="text" id="settingSubtitle" placeholder="Souvenirs de Paris">
+        </div>
+        <div class="form-group">
+          <label>Numéro WhatsApp (optionnel)</label>
+          <input type="text" id="settingWhatsapp" placeholder="+33777033977">
+        </div>
+        <div class="form-group">
+          <label>Adresse e-mail (optionnel)</label>
+          <input type="email" id="settingEmail" placeholder="contact@boutique.com">
+        </div>
+        <button class="btn-primary" id="saveSettingsBtn">Enregistrer les réglages</button>
+        <div class="admin-section-label">Sécurité</div>
+        <div class="form-group">
+          <label>Changer le code admin (4 chiffres)</label>
+          <input type="tel" maxlength="4" id="newPinInput" placeholder="••••" inputmode="numeric">
+        </div>
+        <button class="btn-secondary" id="savePinBtn">Mettre à jour le code</button>
+
+        <div class="admin-section-label">🎨 Apparence du site</div>
+        <p class="theme-intro-hint">Chaque réglage s'applique en direct sur le site dès que tu le modifies — tu peux essayer librement. Rien n'est définitif jusqu'à ce que tu appuies sur « Enregistrer ».</p>
+        <div class="theme-settings-box">
+
+          <div class="theme-group-title" style="margin-top:0;padding-top:0;border-top:none;">🌄 Arrière-plan du site</div>
+          <div class="cat-cover-box" style="margin:0 0 14px;">
+            <div class="lqp-label" style="margin-bottom:8px;">Photo de fond personnalisée</div>
+            <div class="cat-cover-row">
+              <div class="cat-cover-preview" id="bgImagePreviewWrap">
+                <img id="bgImagePreview" src="" alt="" style="display:none;">
+              </div>
+              <div class="cat-cover-actions">
+                <button class="btn-secondary" id="chooseBgImageBtn" style="padding:9px;font-size:12.5px;margin-bottom:6px;">📷 Choisir une photo</button>
+                <button class="btn-secondary" id="resetBgImageBtn" style="padding:7px;font-size:11.5px;">↺ Photo de Paris par défaut</button>
+              </div>
+              <input type="file" accept="image/*" id="bgImageInput" style="display:none;">
+            </div>
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité de la photo de fond <span class="theme-slider-val" id="valBgImageOpacity">100%</span></label>
+            <input type="range" id="themeBgImageOpacity" min="0" max="100" value="100">
+          </div>
+          <div class="theme-slider-row">
+            <label>Voile crème sur la photo de fond <span class="theme-slider-val" id="valBgOverlayOpacity">55%</span></label>
+            <input type="range" id="themeBgOverlayOpacity" min="0" max="100" value="55">
+          </div>
+
+          <div class="theme-group-title">✨ Effet verre (glassmorphism)</div>
+          <div class="theme-slider-row">
+            <label>Opacité du verre (général) <span class="theme-slider-val" id="valGlassOpacity">50%</span></label>
+            <input type="range" id="themeGlassOpacity" min="10" max="95" value="50">
+          </div>
+          <div class="theme-slider-row">
+            <label>Intensité du flou (général) <span class="theme-slider-val" id="valGlassBlur">28px</span></label>
+            <input type="range" id="themeGlassBlur" min="0" max="40" value="28">
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité de l'en-tête (logo + recherche) <span class="theme-slider-val" id="valTopbarOpacity">92%</span></label>
+            <input type="range" id="themeTopbarOpacity" min="20" max="100" value="92">
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité des chips de catégorie <span class="theme-slider-val" id="valCatStripOpacity">38%</span></label>
+            <input type="range" id="themeCatStripOpacity" min="10" max="100" value="38">
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité des tiroirs (panier, admin…) <span class="theme-slider-val" id="valDrawerOpacity">68%</span></label>
+            <input type="range" id="themeDrawerOpacity" min="20" max="100" value="68">
+          </div>
+          <div class="theme-slider-row">
+            <label>Flou des tiroirs <span class="theme-slider-val" id="valDrawerBlur">28px</span></label>
+            <input type="range" id="themeDrawerBlur" min="0" max="40" value="28">
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité du bandeau panier flottant <span class="theme-slider-val" id="valCartFabOpacity">55%</span></label>
+            <input type="range" id="themeCartFabOpacity" min="20" max="100" value="55">
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité du voile sombre derrière un tiroir <span class="theme-slider-val" id="valOverlayOpacity">55%</span></label>
+            <input type="range" id="themeOverlayOpacity" min="10" max="90" value="55">
+          </div>
+          <div class="theme-slider-row">
+            <label>Opacité des messages de confirmation <span class="theme-slider-val" id="valToastOpacity">100%</span></label>
+            <input type="range" id="themeToastOpacity" min="40" max="100" value="100">
+          </div>
+
+          <div class="theme-group-title">🏠 En-tête de la boutique</div>
+          <div class="theme-slider-row">
+            <label>Taille du nom de la boutique <span class="theme-slider-val" id="valShopNameSize">21px</span></label>
+            <input type="range" id="themeShopNameSize" min="16" max="28" value="21">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du logo <span class="theme-slider-val" id="valLogoSize">38px</span></label>
+            <input type="range" id="themeLogoSize" min="28" max="60" value="38">
+          </div>
+          <div class="theme-slider-row">
+            <label>Hauteur de la barre de recherche <span class="theme-slider-val" id="valSearchBarHeight">45px</span></label>
+            <input type="range" id="themeSearchBarHeight" min="36" max="60" value="45">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du texte de recherche <span class="theme-slider-val" id="valSearchFontSize">14.5px</span></label>
+            <input type="range" id="themeSearchFontSize" min="12" max="18" step="0.5" value="14.5">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille de l'icône panier <span class="theme-slider-val" id="valCartIconSize">48px</span></label>
+            <input type="range" id="themeCartIconSize" min="38" max="60" value="48">
+          </div>
+          <div class="theme-slider-row">
+            <label>Hauteur de la bande de catégories <span class="theme-slider-val" id="valCatStripPadding">14px</span></label>
+            <input type="range" id="themeCatStripPadding" min="6" max="24" value="14">
+          </div>
+
+          <div class="theme-group-title">🃏 Cartes produit</div>
+          <div class="theme-slider-row">
+            <label>Opacité des cartes <span class="theme-slider-val" id="valCardOpacity">62%</span></label>
+            <input type="range" id="themeCardOpacity" min="20" max="100" value="62">
+          </div>
+          <div class="theme-slider-row">
+            <label>Arrondi des cartes <span class="theme-slider-val" id="valCardRadius">16px</span></label>
+            <input type="range" id="themeCardRadius" min="0" max="30" value="16">
+          </div>
+          <div class="theme-slider-row">
+            <label>Intensité de l'ombre <span class="theme-slider-val" id="valCardShadow">18%</span></label>
+            <input type="range" id="themeCardShadow" min="0" max="40" value="18">
+          </div>
+          <div class="theme-slider-row">
+            <label>Espace entre les cartes <span class="theme-slider-val" id="valCardGap">8px</span></label>
+            <input type="range" id="themeCardGap" min="2" max="24" value="8">
+          </div>
+          <div class="theme-slider-row">
+            <label>Intensité de l'ombre sous l'en-tête <span class="theme-slider-val" id="valHeaderShadow">6%</span></label>
+            <input type="range" id="themeHeaderShadow" min="0" max="20" value="6">
+          </div>
+          <div class="theme-slider-row">
+            <label>Intensité de l'appui (cartes/boutons) <span class="theme-slider-val" id="valPressScale">8%</span></label>
+            <input type="range" id="themePressScale" min="0" max="20" value="8">
+          </div>
+
+          <div class="theme-group-title">🏷️ Chips de catégorie</div>
+          <div class="theme-slider-row">
+            <label>Arrondi des chips <span class="theme-slider-val" id="valChipRadius">18px</span></label>
+            <input type="range" id="themeChipRadius" min="0" max="30" value="18">
+          </div>
+          <div class="theme-slider-row">
+            <label>Espace entre les chips <span class="theme-slider-val" id="valChipGap">9px</span></label>
+            <input type="range" id="themeChipGap" min="4" max="18" value="9">
+          </div>
+
+          <div class="theme-group-title">💰 Texte & prix</div>
+          <div class="theme-slider-row">
+            <label>Taille du prix <span class="theme-slider-val" id="valPriceSize">21px</span></label>
+            <input type="range" id="themePriceSize" min="14" max="30" value="21">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du nom de produit <span class="theme-slider-val" id="valNameSize">13.5px</span></label>
+            <input type="range" id="themeNameSize" min="11" max="18" step="0.5" value="13.5">
+          </div>
+          <div class="theme-slider-row">
+            <label>Interligne du nom de produit <span class="theme-slider-val" id="valLineHeight">132%</span></label>
+            <input type="range" id="themeLineHeight" min="110" max="160" value="132">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du texte « Réf. » <span class="theme-slider-val" id="valRefSize">10px</span></label>
+            <input type="range" id="themeRefSize" min="8" max="14" value="10">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du texte « Lot de X » <span class="theme-slider-val" id="valLotLabelSize">11.5px</span></label>
+            <input type="range" id="themeLotLabelSize" min="9" max="15" step="0.5" value="11.5">
+          </div>
+          <div class="admin-section-label" style="margin-top:14px;">📏 Étiquette de taille (vêtements)</div>
+          <div class="theme-slider-row">
+            <label>Diamètre du badge <span class="theme-slider-val" id="valSizeBadgeDiameter">30px</span></label>
+            <input type="range" id="themeSizeBadgeDiameter" min="22" max="44" value="30">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du texte <span class="theme-slider-val" id="valSizeBadgeFontSize">13px</span></label>
+            <input type="range" id="themeSizeBadgeFontSize" min="9" max="18" value="13">
+          </div>
+          <div class="theme-row">
+            <div class="theme-field">
+              <label>Fond</label>
+              <input type="color" id="themeSizeBadgeBg" value="#1B2A45">
+            </div>
+            <div class="theme-field">
+              <label>Texte</label>
+              <input type="color" id="themeSizeBadgeText" value="#D89A2C">
+            </div>
+            <div class="theme-field">
+              <label>Bordure</label>
+              <input type="color" id="themeSizeBadgeBorder" value="#D89A2C">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Police des titres</label>
+            <select id="themeFontHeading">
+              <option value="'Fraunces', serif">Fraunces (par défaut, élégant)</option>
+              <option value="'Playfair Display', serif">Playfair Display (classique)</option>
+              <option value="'Georgia', serif">Georgia</option>
+              <option value="'Poppins', sans-serif">Poppins (moderne)</option>
+              <option value="'Jost', sans-serif">Jost (épuré)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Police du texte courant</label>
+            <select id="themeFontBody">
+              <option value="'Jost', sans-serif">Jost (par défaut)</option>
+              <option value="'Inter', sans-serif">Inter</option>
+              <option value="'Poppins', sans-serif">Poppins</option>
+              <option value="'Nunito', sans-serif">Nunito</option>
+              <option value="Georgia, serif">Georgia (classique)</option>
+            </select>
+          </div>
+
+          <div class="theme-group-title">🔘 Boutons</div>
+          <div class="theme-slider-row">
+            <label>Arrondi des boutons <span class="theme-slider-val" id="valButtonRadius">24px</span></label>
+            <input type="range" id="themeButtonRadius" min="0" max="34" value="24">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du bouton "+" <span class="theme-slider-val" id="valAddBtnSize">34px</span></label>
+            <input type="range" id="themeAddBtnSize" min="26" max="46" value="34">
+          </div>
+          <div class="theme-slider-row">
+            <label>Taille du bouton de fermeture des tiroirs <span class="theme-slider-val" id="valDrawerCloseSize">32px</span></label>
+            <input type="range" id="themeDrawerCloseSize" min="26" max="44" value="32">
+          </div>
+
+          <div class="theme-group-title">🖼️ Photos produit</div>
+          <div class="theme-slider-row">
+            <label>Marge intérieure des photos <span class="theme-slider-val" id="valImagePadding">14px</span></label>
+            <input type="range" id="themeImagePadding" min="0" max="30" value="14">
+          </div>
+          <div class="theme-slider-row">
+            <label>Forme des photos (carré ↔ portrait) <span class="theme-slider-val" id="valImageAspectRatio">100%</span></label>
+            <input type="range" id="themeImageAspectRatio" min="80" max="130" value="100">
+          </div>
+          <div class="theme-slider-row">
+            <label>Arrondi des photos elles-mêmes <span class="theme-slider-val" id="valImageRadius">0px</span></label>
+            <input type="range" id="themeImageRadius" min="0" max="20" value="0">
+          </div>
+
+          <div class="theme-group-title">⚡ Animations</div>
+          <div class="theme-slider-row">
+            <label>Vitesse des animations <span class="theme-slider-val" id="valAnimSpeed">100%</span></label>
+            <input type="range" id="themeAnimSpeed" min="40" max="200" value="100">
+          </div>
+          <div class="theme-slider-row">
+            <label>Vitesse des messages de confirmation <span class="theme-slider-val" id="valToastSpeed">100%</span></label>
+            <input type="range" id="themeToastSpeed" min="40" max="200" value="100">
+          </div>
+
+          <div class="theme-group-title">🔥 Sections spéciales</div>
+          <div class="bg-remove-toggle" style="margin-top:0;">
+            <div class="lb">Afficher la section « Promos »
+              <small>Bandeau spécial pour vos articles en promotion</small>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="themeShowPromo" checked>
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="form-group" style="margin-top:8px;">
+            <label>Libellé de la section Promos</label>
+            <input type="text" id="themePromoLabel" placeholder="🔥 Promos">
+          </div>
+          <div class="bg-remove-toggle">
+            <div class="lb">Afficher la section « Nouveauté »
+              <small>Déjà utilisée pour les produits marqués "Nouveauté"</small>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="themeShowNew" checked>
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="form-group" style="margin-top:8px;">
+            <label>Libellé de la section Nouveauté</label>
+            <input type="text" id="themeNewLabel" placeholder="✨ Nouveauté">
+          </div>
+
+          <button class="btn-primary" id="saveThemeBtn" style="margin-top:18px;">✓ Enregistrer l'apparence</button>
+          <button class="btn-secondary" id="resetThemeBtn" style="padding:9px;font-size:13px;">↺ Annuler / revenir à l'enregistré</button>
+        </div>
+      </div>
+
+      <button class="logout-link" id="adminLogoutBtn">Verrouiller l'administration</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="clientPromptOverlay"></div>
+<div class="client-prompt-modal" id="clientPromptModal">
+  <div class="client-prompt-emoji">👤</div>
+  <h2>Pour qui aujourd'hui ?</h2>
+  <p>Cherchez un client existant ou commencez directement.</p>
+  <div class="form-group" style="position:relative;text-align:left;margin-bottom:8px;">
+    <input type="text" id="modalClientSearch" placeholder="Nom du client ou magasin…" autocomplete="off">
+    <div id="modalClientResults" class="address-suggestions-box"></div>
+  </div>
+  <div id="modalSelectedClient" style="display:none;background:rgba(216,154,44,0.12);border:1px solid var(--mustard);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--ink);text-align:left;"></div>
+  <button class="btn-primary" id="modalConfirmClientBtn" style="margin-bottom:8px;" disabled>✓ Commencer la commande</button>
+  <button class="btn-secondary" id="modalSkipBtn">Passer (saisie manuelle au checkout)</button>
+</div>
+
+<div class="overlay" id="celebrationOverlay"></div>
+<div class="celebration-modal" id="celebrationModal">
+  <div class="emoji" id="celebrationEmoji">🎉</div>
+  <div class="title" id="celebrationTitle">—</div>
+  <div class="subtitle" id="celebrationSubtitle">—</div>
+</div>
+
+<div class="overlay" id="awardOverlay"></div>
+
+<!-- Aperçu image produit (double-clic / double-toucher) -->
+<div id="imagePreviewOverlay" class="image-preview-overlay" style="display:none;" onclick="closeImagePreview()">
+  <button class="image-preview-close" onclick="closeImagePreview()">
+    <svg class="ic ic-lg"><use href="#ic-x"/></svg>
+  </button>
+  <img id="imagePreviewImg" src="" alt="" class="image-preview-img">
+  <div id="imagePreviewCaption" class="image-preview-caption"></div>
+</div>
+
+<!-- Modale : assigner une commande à un client + archiver -->
+<div class="overlay" id="assignClientOverlay"></div>
+<div class="client-prompt-modal" id="assignClientModal">
+  <div class="client-prompt-emoji">📤</div>
+  <h2>Envoyer au client</h2>
+  <p id="assignClientOrderLabel" style="font-size:12px;color:var(--brass);margin-top:-8px;margin-bottom:12px;">—</p>
+  <div class="form-group" style="position:relative;text-align:left;margin-bottom:8px;">
+    <input type="text" id="assignClientSearchInput" placeholder="Nom du client ou magasin…" autocomplete="off">
+    <div id="assignClientResults" class="address-suggestions-box"></div>
+  </div>
+  <div id="assignClientSelected" style="display:none;background:rgba(216,154,44,0.12);border:1px solid var(--mustard);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--ink);text-align:left;"></div>
+  <button class="btn-primary" id="assignClientConfirmBtn" disabled>✓ Envoyer et archiver</button>
+  <button class="btn-secondary" id="assignClientCancelBtn" style="margin-top:8px;">Annuler</button>
+</div>
+
+<!-- Modale : modifier le nom d'un client -->
+<div class="overlay" id="editClientOverlay"></div>
+<div class="client-prompt-modal" id="editClientModal">
+  <div class="client-prompt-emoji">✏️</div>
+  <h2>Modifier le client</h2>
+  <div class="form-group" style="text-align:left;">
+    <label>Nom</label>
+    <input type="text" id="editClientNameInput" placeholder="Nom du client">
+  </div>
+  <div class="form-group" style="text-align:left;">
+    <label>Magasin</label>
+    <input type="text" id="editClientShopInput" placeholder="Nom du magasin">
+  </div>
+  <div class="form-group" style="text-align:left;">
+    <label>Téléphone</label>
+    <input type="text" id="editClientPhoneInput" placeholder="+33 6 …">
+  </div>
+  <button class="btn-primary" id="editClientSaveBtn">✓ Enregistrer</button>
+  <button class="btn-secondary" id="editClientCancelBtn" style="margin-top:8px;">Annuler</button>
+</div>
+<div class="award-modal" id="monthlyAwardModal">
+  <div class="award-trophy">🏆</div>
+  <div class="award-title" id="awardMonthLabel">—</div>
+  <div class="award-stat"><span class="award-stat-label">Chiffre d'affaires</span><span class="award-stat-value" id="awardRevenue">—</span></div>
+  <div class="award-stat"><span class="award-stat-label">Ma commission</span><span class="award-stat-value" id="awardCommission">—</span></div>
+  <div class="award-stat"><span class="award-stat-label">Produit star</span><span class="award-stat-value" id="awardTopProduct">—</span></div>
+  <button id="closeAwardModalBtn">Fermer</button>
+</div>
+
+<div class="drawer" id="productFormDrawer">
+  <div class="drawer-header">
+    <h2 id="productFormTitle">Nouveau produit</h2>
+    <button class="drawer-close" data-close="productFormDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <div class="form-group">
+      <label>Photo du produit</label>
+      <div class="image-drop" id="imageDropZone">
+        <img id="imagePreview" style="display:none;">
+        <div id="imagePlaceholder">
+          <div class="ph">📷</div>
+          <div class="lb">Touchez pour ajouter une photo</div>
+        </div>
+        <input type="file" accept="image/*" id="imageFileInput">
+      </div>
+      <button class="btn-secondary" id="openCropBtn" style="display:none;margin-top:8px;padding:9px;font-size:13px;">✂️ Recadrer / ajuster cette photo</button>
+    </div>
+    <div class="form-group">
+      <label>Nom du produit</label>
+      <input type="text" id="formName" placeholder="Ex. Magnet panier garni">
+    </div>
+    <div class="form-group">
+      <label>Référence</label>
+      <input type="text" id="formRef" placeholder="Ex. MAT242">
+    </div>
+    <div class="form-group">
+      <label>Prix (€)</label>
+      <input type="number" step="0.01" id="formPrice" placeholder="1.00">
+    </div>
+    <div class="form-group">
+      <label>Catégorie</label>
+      <select id="formCategory"></select>
+    </div>
+    <div class="form-group">
+      <label>Taille (optionnel — pour les vêtements)</label>
+      <select id="formSize">
+        <option value="">Aucune</option>
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Vente</label>
+      <div class="unit-toggle">
+        <button type="button" id="unitToggleUnit" class="active">À l'unité</button>
+        <button type="button" id="unitToggleBulk">Par lot</button>
+      </div>
+      <div id="bulkSizeWrap" style="display:none;">
+        <input type="number" id="formUnitStep" placeholder="Ex. 12" min="2">
+        <div class="form-hint">Chaque ajout au panier comptera ce nombre d'unités (ex. 12 = un paquet de 12).</div>
+      </div>
+    </div>
+    <div class="bg-remove-toggle">
+      <div class="lb">Rupture de stock
+        <small>Le produit reste visible mais ne peut plus être commandé</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="outOfStockToggle">
+        <span class="track"></span>
+      </label>
+    </div>
+    <div class="bg-remove-toggle" style="margin-top:8px;">
+      <div class="lb">Mettre en avant
+        <small>Affiche ce produit dans « ⭐ Meilleures ventes »</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="featuredToggle">
+        <span class="track"></span>
+      </label>
+    </div>
+    <div class="bg-remove-toggle" style="margin-top:8px;">
+      <div class="lb">Nouveauté
+        <small>Affiche ce produit dans « ✨ Nouveauté »</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="newToggle">
+        <span class="track"></span>
+      </label>
+    </div>
+    <div class="bg-remove-toggle" style="margin-top:8px;">
+      <div class="lb">Promo
+        <small>Affiche ce produit dans la section « Promos »</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="promoToggle">
+        <span class="track"></span>
+      </label>
+    </div>
+    <button class="btn-primary" id="saveProductBtn" style="margin-top:16px;">Enregistrer le produit</button>
+    <button class="btn-danger-outline" id="deleteProductBtn" style="display:none;">Supprimer ce produit</button>
+  </div>
+</div>
+
+<div class="drawer" id="cropDrawer">
+  <div class="drawer-header">
+    <h2>Recadrer la photo</h2>
+    <button class="drawer-close" data-close="cropDrawer"><svg class="ic"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <p style="font-size:13px;color:var(--cream-dim);margin-top:0;">Faites glisser pour déplacer, utilisez le curseur pour zoomer.</p>
+    <div class="crop-stage" id="cropStage">
+      <canvas id="cropCanvas" width="320" height="320"></canvas>
+    </div>
+    <div class="form-group" style="margin-top:14px;">
+      <label>Zoom</label>
+      <input type="range" id="cropZoomSlider" min="100" max="300" value="100" style="width:100%;">
+    </div>
+    <button class="btn-primary" id="applyCropBtn">Appliquer le recadrage</button>
+    <button class="btn-secondary" id="cancelCropBtn">Annuler</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="config.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js?v=1"></script>
+</body>
+</html>
